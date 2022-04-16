@@ -1,6 +1,6 @@
 
 CREATE TABLE "Product" (
-  "ProductID" int PRIMARY KEY,
+  "ProductID" BIGSERIAL PRIMARY KEY,
   "User_ID" varchar,
   "prodcut_title" varchar,
   "metaTitle" varchar,
@@ -26,7 +26,7 @@ CREATE TABLE "Product_Category" (
 );
 
 CREATE TABLE "Category" (
-  "CategoryID" bigint PRIMARY KEY,
+  "CategoryID" BIGSERIAL  PRIMARY KEY,
   "parentID" int,
   "title" varchar,
   "metaTitle" varchar,
@@ -35,7 +35,7 @@ CREATE TABLE "Category" (
 );
 
 CREATE TABLE "Product_Review" (
-  "reviewID" int PRIMARY KEY,
+  "reviewID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
   "parentID" int,
   "title" varchar,
@@ -47,7 +47,7 @@ CREATE TABLE "Product_Review" (
 );
 
 CREATE TABLE "order_person" (
-  "Order_person_ID" int PRIMARY KEY,
+  "Order_person_ID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
   "User_ID" int,
   "order_status" int,
@@ -72,13 +72,13 @@ CREATE TABLE "order_person" (
 );
 
 CREATE TABLE "order_group" (
+  "order_group_ID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
-  "order_group_ID" int PRIMARY KEY,
   "order_quantity" int
 );
 
 CREATE TABLE "Cart" (
-  "Cart_ID" int PRIMARY KEY,
+  "Cart_ID" BIGSERIAL PRIMARY KEY,
   "User_ID" int,
   "status" int,
   "User_Fname" varchar,
@@ -96,7 +96,7 @@ CREATE TABLE "Cart" (
 );
 
 CREATE TABLE "Cart_item" (
-  "ID" int PRIMARY KEY,
+  "ID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
   "Cart_ID" int,
   "sku" varchar,
