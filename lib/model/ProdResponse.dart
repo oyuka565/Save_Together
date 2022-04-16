@@ -28,11 +28,11 @@ class ProductResponse {
   int? groupQty;
   int? currentOrderQty;
   int? status;
-  Null? createdAt;
-  Null? updatedAt;
-  Null? publishedAt;
-  Null? startsAt;
-  Null? endsAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? publishedAt;
+  DateTime? startsAt;
+  DateTime? endsAt;
   String? content;
   String? serialNo;
 
