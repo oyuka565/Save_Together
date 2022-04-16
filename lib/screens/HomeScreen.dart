@@ -3,7 +3,6 @@
 //import 'package:TOMO/screens/NewsDetailScreen.dart';
 //import 'package:TOMO/templates/OrderAppBar.dart' as orderAppBar;
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:together_app/model/ProdResponse.dart';
 import 'package:together_app/templates/popUp.dart';
 import 'package:together_app/utils/Func.dart';
 //import 'package:TOMO/utils/api.dart';
@@ -20,21 +19,20 @@ import 'ProdDetailScreen.dart';
 
 //import 'NavigationMenu.dart';
 
-class ProdListScreen extends StatefulWidget {
+class NewsListScreen extends StatefulWidget {
   @override
-  _ProdListScreen createState() => _ProdListScreen();
+  _NewsListScreen createState() => _NewsListScreen();
 }
 
-class _ProdListScreen extends State<ProdListScreen> {
+class _NewsListScreen extends State<NewsListScreen> {
   final GlobalKey<ScaffoldState> mainDrawerKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    readProdData();
     super.initState();
   }
 
-  late ProductListResponse prodList;
+  late UserListResponse userInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class _ProdListScreen extends State<ProdListScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  buildProdList(),
+
                 ],
               ),
             ),
@@ -74,13 +72,13 @@ class _ProdListScreen extends State<ProdListScreen> {
     );
   }
 
-  buildProdList() {
+  buildNewsList() {
     return Container(
       height: MediaQuery.of(context).size.height * 0.9 - 130,
       width: MediaQuery.of(context).size.width * 0.9,
       padding: EdgeInsets.symmetric(vertical: 10),
       child: ListView.builder(
-          itemCount: (prodList.list.length),
+          itemCount: (userInfo.list.length),
           itemBuilder: (BuildContext, index) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -95,12 +93,13 @@ class _ProdListScreen extends State<ProdListScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ProdDetailScreen(
-                              prodList.list[index].productID)),
+                              userInfo.list[index].id)),
                     );
                     //Navigator.of(context)
                     //    .push(_orderDetailsScreenRoute());
                   },
-                  child: Text(prodList.list[index].prodcutTitle!,
+                  child: Text(
+                    Func.toStr(userInfo.list[index].name),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 20,
@@ -108,7 +107,8 @@ class _ProdListScreen extends State<ProdListScreen> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text( prodList.list[index].summary!,
+                Text(
+                  Func.toStr(userInfo.list[index].email),
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 12,
@@ -127,19 +127,19 @@ class _ProdListScreen extends State<ProdListScreen> {
     );
   }
 
-  readProdData() {
+  readNewsData() {
     try {
       setState(() {
         globals.showProgress = true;
       });
 
       APIService apiService = new APIService();
-      apiService.prodList().then((value) {
+      apiService.userList(0).then((value) {
         if (value != null) {
 
               try {
                 setState(() {
-                  prodList = value;
+                  userInfo = value;
                 });
               } catch (e) {
                 print("user aldaa $e");

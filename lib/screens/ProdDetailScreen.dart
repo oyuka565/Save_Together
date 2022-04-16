@@ -16,7 +16,7 @@ import '../utils/api.dart';
 //import 'NavigationMenu.dart';
 
 class ProdDetailScreen extends StatefulWidget {
-  final int _newsId;
+  final int? _newsId;
 
   ProdDetailScreen(this._newsId);
 
@@ -184,7 +184,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       });
 
       APIService apiService = new APIService();
-      apiService.userList(widget._newsId).then((value) {
+      apiService.userList(widget._newsId!).then((value) {
         if (value != null) {
           try {
             setState(() {
