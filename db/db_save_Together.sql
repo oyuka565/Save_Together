@@ -5,7 +5,6 @@ CREATE TABLE "Product" (
   "prodcut_title" varchar,
   "metaTitle" varchar,
   "summary" text,
-  "product_type" int,
   "product_price" float,
   "discount" float,
   "quantity" int,
@@ -18,8 +17,7 @@ CREATE TABLE "Product" (
   "startsAt" timestamp,
   "endsAt" timestamp,
   "content" text,
-  "serial_no" text,
-  "sku" varchar
+  "serial_no" text
 );
 
 CREATE TABLE "Product_Category" (
