@@ -134,7 +134,7 @@ class _ProdListScreen extends State<ProdListScreen> {
       });
 
       APIService apiService = new APIService();
-      apiService.prodList().then((value) {
+      apiService.prodList(0).then((value) {
         if (value != null) {
 
               try {

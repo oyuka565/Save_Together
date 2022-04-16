@@ -1,5 +1,6 @@
 //import 'package:together_app/templates/OrderAppBar.dart' as orderAppBar;
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:together_app/model/ProdResponse.dart';
 import 'package:together_app/model/UserList.dart';
 import 'package:together_app/templates/popUp.dart';
 import 'package:together_app/utils/Func.dart';
@@ -16,9 +17,9 @@ import '../utils/api.dart';
 //import 'NavigationMenu.dart';
 
 class ProdDetailScreen extends StatefulWidget {
-  final int? _newsId;
+  final int? _prodId;
 
-  ProdDetailScreen(this._newsId);
+  ProdDetailScreen(this._prodId);
 
   @override
   _ProdDetailScreen createState() => _ProdDetailScreen();
@@ -34,7 +35,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     setState(() {});
   }
 
-  UserListResponse userInfo = new UserListResponse(list: []);
+  ProductListResponse prodInfo = new ProductListResponse(list: []);
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +92,8 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                     ),*/
 
                     Text(
-                      userInfo.list.isNotEmpty
-                          ? Func.toStr(userInfo.list[0].id)
+                      prodInfo.list.isNotEmpty
+                          ? Func.toStr(prodInfo.list[0].productID!)
                           : "",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -105,8 +106,8 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                       height: 10,
                     ),
                     Text(
-                      userInfo.list.isNotEmpty
-                          ? Func.toStr(userInfo.list[0].name)
+                      prodInfo.list.isNotEmpty
+                          ? Func.toStr(prodInfo.list[0].summary!)
                           : "",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -120,8 +121,8 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                       height: 10,
                     ),
                     Text(
-                      userInfo.list.isNotEmpty
-                          ? Func.toStr(userInfo.list[0].email)
+                      prodInfo.list.isNotEmpty
+                          ? Func.toStr(prodInfo.list[0].discount!)
                           : "",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
@@ -184,11 +185,11 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       });
 
       APIService apiService = new APIService();
-      apiService.userList(widget._newsId!).then((value) {
+      apiService.prodList(widget._prodId!).then((value) {
         if (value != null) {
           try {
             setState(() {
-              userInfo = value;
+              prodInfo = value;
             });
           } catch (e) {
             print("OrderItemDetail aldaa $e");
