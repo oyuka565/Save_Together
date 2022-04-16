@@ -2,13 +2,13 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
   host: 'localhost',
-  database: 'together',
-  password: 'password',
+  database: 'api',
+  password: 'sa',
   port: 5432,
 })
 
 const getProd = (request, response) => {
-  pool.query('SELECT * FROM Product ORDER BY ProductID ASC', (error, results) => {
+  pool.query('SELECT * FROM public."Product" ORDER BY "ProductID" ASC', (error, results) => {
     if (error) {
       throw error
     }
