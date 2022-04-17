@@ -68,7 +68,8 @@ CREATE TABLE "order_person" (
   "quantity" int,
   "createdAt" timestamp,
   "updatedAt" timestamp,
-  "content" text
+  "content" text,
+  "image_url" text
 );
 
 CREATE TABLE "order_group" (

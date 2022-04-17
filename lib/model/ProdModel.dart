@@ -3,27 +3,27 @@ import 'dart:convert';
 import '../utils/Func.dart';
 
 class ProductListResponse {
-  final List<ProductResponse> list;
+  final List<ProductModel> list;
 
   ProductListResponse({
     required this.list,
   });
 
   factory ProductListResponse.fromJson(List<dynamic> parsedJson) {
-    List<ProductResponse> list;//= new List<UserResponse>();
-    list = parsedJson.map((i) => ProductResponse.fromJson(i)).toList();
+    List<ProductModel> list;//= new List<UserResponse>();
+    list = parsedJson.map((i) => ProductModel.fromJson(i)).toList();
 
     return new ProductListResponse(list: list);
   }
 }
-class ProductResponse {
+class ProductModel {
   int? productID;
   String? userID;
   String? prodcutTitle;
   String? metaTitle;
   String? summary;
-  int? productPrice;
-  int? discount;
+  double? productPrice;
+  double? discount;
   int? quantity;
   int? groupQty;
   int? currentOrderQty;
@@ -35,8 +35,9 @@ class ProductResponse {
   DateTime? endsAt;
   String? content;
   String? serialNo;
+  String? imageUrl;
 
-  ProductResponse(
+  ProductModel(
       {this.productID,
         this.userID,
         this.prodcutTitle,
@@ -54,27 +55,29 @@ class ProductResponse {
         this.startsAt,
         this.endsAt,
         this.content,
-        this.serialNo});
+        this.serialNo,
+        this.imageUrl});
 
-  ProductResponse.fromJson(Map<String, dynamic> json) {
-    productID = json['ProductID'];
+  ProductModel.fromJson(Map<String, dynamic> json) {
+    productID =  Func.toInt(json['ProductID']);
     userID = json['User_ID'];
     prodcutTitle = json['prodcut_title'];
     metaTitle = json['metaTitle'];
     summary = json['summary'];
-    productPrice = json['product_price'];
-    discount = json['discount'];
-    quantity = json['quantity'];
-    groupQty = json['group_qty'];
-    currentOrderQty = json['current_order_qty'];
-    status = json['status'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    publishedAt = json['publishedAt'];
-    startsAt = json['startsAt'];
-    endsAt = json['endsAt'];
+    productPrice = Func.toDouble(json['product_price']);
+    discount = Func.toDouble(json['discount']);
+    quantity = Func.toInt(json['quantity']);
+    groupQty = Func.toInt(json['group_qty']);
+    currentOrderQty = Func.toInt(json['current_order_qty']);
+    status = Func.toInt(json['status']);
+    createdAt = Func.toDate(json['createdAt']==null?'': json['createdAt']);
+    updatedAt = Func.toDate(json['updatedAt']==null?'': json['updatedAt']);
+    publishedAt = Func.toDate(json['publishedAt']==null?'': json['publishedAt']);
+    startsAt = Func.toDate(json['startsAt']==null?'': json['startsAt']);
+    endsAt = Func.toDate(json['endsAt']==null?'': json['endsAt']);
     content = json['content'];
     serialNo = json['serial_no'];
+    imageUrl = json['image_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -97,6 +100,7 @@ class ProductResponse {
     data['endsAt'] = this.endsAt;
     data['content'] = this.content;
     data['serial_no'] = this.serialNo;
+    data['image_url'] = this.imageUrl;
     return data;
   }
 }
