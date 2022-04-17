@@ -35,7 +35,7 @@ void informationPopup(BuildContext context, String topic, String msg) {
                                   children: [
                                     Text(topic,
                                         style: TextStyle(
-                                          color: globals.orangeColor,
+                                          color: globals.yellowColor,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         )),
@@ -47,7 +47,7 @@ void informationPopup(BuildContext context, String topic, String msg) {
                                         highlightColor: Colors.transparent,
                                         child: Icon(
                                           MdiIcons.closeCircle,
-                                          color: globals.orangeColor,
+                                          color: globals.yellowColor,
                                           size: 20,
                                         )),
                                   ])),
