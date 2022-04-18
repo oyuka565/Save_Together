@@ -16,6 +16,11 @@ app.get('/', (request, response) => {
 })
 
 app.get('/prods', db.getProd)
+app.get('/prods/:id', db.getProdById)
+app.post('/saveProd', db.createProd)
+app.put('/saveProd/:id', db.updateProd)
+app.get('/category', db.getCategory)
+
 app.get('/users', db.getUsers)
 app.get('/users/:id', db.getUserById)
 app.post('/users', db.createUser)
