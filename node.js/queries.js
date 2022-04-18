@@ -8,7 +8,85 @@ const pool = new Pool({
 })
 
 const getProd = (request, response) => {
-  pool.query('SELECT * FROM Product ORDER BY ProductID ASC', (error, results) => {
+  pool.query('SELECT * FROM public."Product" ORDER BY "ProductID" ASC', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getProdById = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query('SELECT * FROM public."Product" WHERE "ProductID"  = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const createProd = (request, response) => {
+  try {
+    const { User_ID,	prodcut_title, metaTitle,
+      summary,	product_price, discount,
+      quantity,	group_qty, status,
+      content,	serial_no, image_url } = request.body
+    
+      console.log(request.body) 
+
+    pool.query('INSERT INTO public."Product" ("User_ID",	"prodcut_title", "metaTitle","summary",	"product_price", "discount", "quantity",	"group_qty", "status", "content",	"serial_no", "image_url", "current_order_qty","createdAt") VALUES ($1, $2, $3, ' +
+    '           $4, $5, $6, ' +
+    '           $7, $8, $9, ' +
+    '           $10, $11, $12, 0, current_date)', [User_ID,	prodcut_title, metaTitle,
+      summary,	product_price, discount,
+      quantity,	group_qty, status,
+      content,	serial_no, image_url], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send() //results.rows[0].ProductId)    
+    })
+} catch (err) {
+    console.error(err.message)
+}
+}
+
+const updateProd = (request, response) => {
+  try{
+    const {ProductId, User_ID,	prodcut_title, metaTitle,
+      summary,	product_price, discount,
+      quantity,	group_qty, status,
+      content,	serial_no, image_url } = request.body
+    
+    console.log(request.body) 
+    console.log(ProductId) 
+
+    var sql = 'UPDATE public."Product" SET ' +
+    '  "User_ID" = $1,	"prodcut_title" = $2, "metaTitle" =$3,' +
+    '	"summary" = $4,	"product_price" = $5, "discount" = $6,' +
+    '	"quantity" = $7,	"group_qty" = $8, "status" = $9,	' +
+    '  "content" = $10,	"serial_no" = $11, "image_url" = $12, "updatedAt" = current_date  WHERE "ProductID" = $13' 
+
+    pool.query(sql
+      , [User_ID,	prodcut_title, metaTitle,
+      summary,	product_price, discount,
+      quantity,	group_qty, status,
+      content,	serial_no, image_url, ProductId], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200)
+    })
+}
+  catch (err) {
+    console.error(err.message)
+}
+}
+
+const getCategory = (request, response) => {
+  pool.query('SELECT * FROM public."Category"', (error, results) => {
     if (error) {
       throw error
     }
@@ -76,6 +154,10 @@ const getUsers = (request, response) => {
 
   module.exports = {
     getProd,
+    getProdById,
+    createProd,
+    updateProd,
+    getCategory,
     getUsers,
     getUserById,
     createUser,
