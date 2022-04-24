@@ -2,6 +2,8 @@
 //import 'package:TOMO/model/NewsList.dart';
 //import 'package:TOMO/screens/NewsDetailScreen.dart';
 //import 'package:TOMO/templates/OrderAppBar.dart' as orderAppBar;
+import 'dart:io';
+
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:together_app/model/ProdModel.dart';
 import 'package:together_app/templates/popUp.dart';
@@ -15,6 +17,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import '../components/coustom_bottom_nav_bar.dart';
+import '../enums.dart';
 import '../model/UserList.dart';
 import '../templates/AppMenu.dart';
 import '../utils/api.dart';
@@ -42,9 +46,9 @@ class _ProdListScreen extends State<ProdListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      key: mainDrawerKey,
-      //drawer: NavigationMenuState(),
+      appBar: AppBar(
+        title: Text("Profile"),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SchedulerBinding.instance?.window.platformBrightness ==
                 Brightness.dark
@@ -79,6 +83,7 @@ class _ProdListScreen extends State<ProdListScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 
@@ -90,47 +95,71 @@ class _ProdListScreen extends State<ProdListScreen> {
       child: ListView.builder(
           itemCount: (prodList.list.length),
           itemBuilder: (BuildContext, index) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            return
+                Row(
+                  children: [
                 SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ProdDetailScreen(prodList.list[index].productID)),
-                    );
-                    //Navigator.of(context)
-                    //    .push(_orderDetailsScreenRoute());
-                  },
-                  child: Text(
-                    prodList.list[index].prodcutTitle!,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: globals.blueColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Text(
-                  prodList.list[index].summary!,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: globals.grayColor,
-                  ),
-                ),
-                // actionLocation, actionActualDate
-                SizedBox(
-                  height: 15,
-                ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ProdDetailScreen(prodList.list[index].productID)),
+                      );
+                      //Navigator.of(context)
+                      //    .push(_orderDetailsScreenRoute());
+                    },
 
-                Divider(),
+                    child: Image.file(
+                      File(
+                          prodList.list[index].imageUrl!),
+                      width: 85,
+                      height: 85,
+                      fit: BoxFit.cover,
+                    )
+                ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProdDetailScreen(prodList.list[index].productID)),
+                        );
+                        //Navigator.of(context)
+                        //    .push(_orderDetailsScreenRoute());
+                      },
+                      child: Text(
+                        prodList.list[index].prodcutTitle!,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: globals.blueColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Text(
+                      prodList.list[index].summary!,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: globals.grayColor,
+                      ),
+                    ),
+                    // actionLocation, actionActualDate
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Divider(),
+                  ],
+                ),
               ],
             );
           }),

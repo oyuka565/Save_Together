@@ -44,7 +44,7 @@ dependencies:
   cupertino_icons: ^1.0.4
   flutter_svg: ^0.22.0 # help us to use SVG in our app
   provider: ^4.3.1
-
+  image_picker: ^0.8.5
 
   # Firebase
   firebase_core: ^1.8.0
