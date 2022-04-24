@@ -578,7 +578,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                     value: _selectedCategory,
                     isExpanded: true,
                     items: categoryList.list
-                        .map((CategoryResponse item) =>
+                        .map((CategoryModel item) =>
                             DropdownMenuItem<String>(
                                 child: Text(item.title!),
                                 value: Func.toStr(item.categoryID!)))

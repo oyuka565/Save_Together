@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:together_app/model/ProdModel.dart';
 
 import 'package:together_app/model/Product.dart';
 import 'components/body.dart';
@@ -17,13 +18,13 @@ class DetailsScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(AppBar().preferredSize.height),
         child: CustomAppBar(rating: agrs.product.rating),
       ),
-      body: Body(product: agrs.product),
+      body: Body(agrs.product),
     );
   }
 }
 
 class ProductDetailsArguments {
-  final Product product;
+  final ProductModel product;
 
-  ProductDetailsArguments({required this.product});
+  ProductDetailsArguments(this.product);
 }

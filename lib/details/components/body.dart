@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/components/default_button.dart';
+import 'package:together_app/model/OrderModel.dart';
 import 'package:together_app/model/Product.dart';
 import 'package:together_app/size_config.dart';
-
+import 'package:together_app/templates/popUp.dart';
+import '../../utils/api.dart';
+import '../../utils/globals.dart';
+import '../../model/ProdModel.dart';
 import 'color_dots.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 
-class Body extends StatelessWidget {
-  final Product product;
+class Body extends StatefulWidget {
+  final ProductModel product;
+  const Body(this.product);
+  @override
+  _Body createState() => _Body();
+}
+class _Body extends State<Body> {
 
-  const Body({Key? key, required this.product}) : super(key: key);
+/*
+class Body extends StatelessWidget {
+  final ProductModel product;
+
+  const Body(this.product);
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -19,34 +33,79 @@ class Body extends StatelessWidget {
 
     return ListView(
       children: [
-        ProductImages(product: product),
+        ProductImages(widget.product),
         TopRoundedContainer(
           color: Colors.white,
           child: Column(
             children: [
-              ProductDescription(
-                product: product,
-                pressOnSeeMore: () {},
-              ),
+              ProductDescription(widget.product
+                  //, pressOnSeeMore: () {}
+                  ),
               TopRoundedContainer(
                 color: Color(0xFFF6F7F9),
                 child: Column(
                   children: [
-                    ColorDots(product: product),
+                    //ColorDots(ProductModel: product),
                     TopRoundedContainer(
                       color: Colors.white,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                          left: screenWidth * 0.15,
-                          right: screenWidth * 0.15,
-                          bottom: 40,
-                          top: 15,
-                        ),
-                        child: DefaultButton(
-                          text: "Сагсанд нэмэх",
-                          press: () {},
-                        ),
-                      ),
+                          padding: EdgeInsets.only(
+                            left: screenWidth * 0.15,
+                            right: screenWidth * 0.15,
+                            bottom: 40,
+                            top: 15,
+                          ),
+                          child: Center(
+                            child: Row(
+                              children: [
+                              SizedBox(
+                              width: 120,
+                              height: 56,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  shape:
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                  primary: Colors.white,
+                                  backgroundColor: yellowColor,
+                                ),
+                                onPressed: (){
+                                  addToCart();
+                                  },
+                                child: Text(
+                                  "Сагсанд нэмэх",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                              height: 56),
+                                SizedBox(
+                                  width: 120,
+                                  height: 56,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                      shape:
+                                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                      primary: Colors.white,
+                                      backgroundColor: yellowColor,
+                                    ),
+                                    onPressed: (){  createOrder();},
+                                    child: Text(
+                                      "Захиалах",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
                     ),
                   ],
                 ),
@@ -57,4 +116,28 @@ class Body extends StatelessWidget {
       ],
     );
   }
+
+  void createOrder() {
+     OrderModel order = new OrderModel();
+     order.userId = userId;
+     order.productID =widget.product.productID;
+     order.discount = widget.product.discount;
+     order.quantity = 1;
+     order.grandTotal = widget.product.discount;
+
+    APIService apiService = new APIService();
+    apiService.createOrder(order).then((value) {
+      if (value != null && value == true) {
+        try {
+          informationPopup(context, "Захиалга", "Амжилттай захиалгдлаа.");
+        } catch (e) {
+          print("categoryList aldaa $e");
+        }
+      } else {
+        serverErrorPopup(context, "empty value");
+      }
+    });
+  }
+
+  void addToCart() {}
 }

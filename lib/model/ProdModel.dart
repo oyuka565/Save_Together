@@ -36,6 +36,8 @@ class ProductModel {
   String? content;
   String? serialNo;
   String? imageUrl;
+  bool isFavourite = true;
+  double rating = 4.5;
 
   ProductModel(
       {this.productID,

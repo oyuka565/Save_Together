@@ -1,75 +1,85 @@
 import 'package:flutter/material.dart';
-
+import 'package:together_app/utils/globals.dart' as globals;
 import '../../../size_config.dart';
+import '../../model/CategoryResponse.dart';
+import '../../templates/popUp.dart';
+import '../../utils/Func.dart';
+import '../../utils/api.dart';
 import 'section_title.dart';
 
-class SpecialOffers extends StatelessWidget {
-  const SpecialOffers({
-    Key? key,
-  }) : super(key: key);
+class SpecialOffers extends StatefulWidget {
+  // final int? _prodId;
+
+  // const SpecialOffers(this._prodId);
+  const SpecialOffers();
+
+  @override
+  _SpecialOffers createState() => _SpecialOffers();
+}
+
+class _SpecialOffers extends State<SpecialOffers> {
+  @override
+  void initState() {
+    super.initState();
+    categoryLists();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: SectionTitle(
-            title: "Бүх ангилал",
-            press: () {},
+    return Center(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: SectionTitle(
+              title: "Бүх ангилал",
+              press: () {},
+            ),
           ),
-        ),
-        SizedBox(height: 20),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SpecialOfferCard(
-                image: "assets/images/tshirt.png",
-                category: "Хувцас",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/Image Popular Product 1.png",
-                category: "Технологи",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/ger_ahui.png",
-                category: "Гэр ахуй",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/hot_airballoon.png",
-                category: "Аялал",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/salon.png",
-                category: "Салон",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/book.png",
-                category: "Ном",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/ticket.png",
-                category: "Тасалбар",
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/huns.png",
-                category: "Хүнс",
-                press: () {},
-              ),
-              SizedBox(width: 20),
-            ],
-          ),
-        ),
-      ],
+          SizedBox(height: 20),
+          SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                width: 500,
+                height: 80,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: (categoryList.list.length),
+                    itemBuilder: (BuildContext, index) {
+                      return SpecialOfferCard(
+                        image: (categoryList.list[index].imageUrl == null
+                            ? "assets/images/noimageavailable.jpg"
+                            : categoryList.list[index].imageUrl!),
+                        category: categoryList.list[index].title!,
+                        press: () {},
+                      );
+                    }),
+              ))
+        ],
+      ),
     );
+  }
+
+  CategoryListResponse categoryList = new CategoryListResponse(list: []);
+
+  void categoryLists() {
+    APIService apiService = new APIService();
+    apiService.categoryList().then((value) {
+      if (value != null) {
+        try {
+          setState(() {
+            categoryList = value;
+            globals.selectedCategoryID = categoryList.list[0].categoryID!;
+          });
+        } catch (e) {
+          print("categoryList aldaa $e");
+        }
+      } else {
+        serverErrorPopup(context, "empty value");
+      }
+    });
   }
 }
 
