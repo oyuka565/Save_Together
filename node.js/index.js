@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const db = require('./queries')
+const dbOrder = require('./order')
 const port = 3000
 
 app.use(bodyParser.json())
@@ -20,6 +21,20 @@ app.get('/prods/:id', db.getProdById)
 app.post('/saveProd', db.createProd)
 app.put('/saveProd/:id', db.updateProd)
 app.get('/category', db.getCategory)
+
+app.get('/orders/:id', dbOrder.getUserOrders)
+app.get('/order/:id', dbOrder.getOrderId)
+//app.post('/order', dbOrder.createOrder)
+app.post('/order', async (req, res) => {
+  try {
+    return await dbOrder.createOrder(req, res); 
+  } catch(e) {
+    // handle errors
+  }
+});
+
+app.put('/order/:id', dbOrder.updateOrder)
+app.delete('/order/:id', dbOrder.deleteOrder)
 
 app.get('/users', db.getUsers)
 app.get('/users/:id', db.getUserById)

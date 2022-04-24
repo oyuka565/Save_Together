@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:together_app/screens/OrderScreen.dart';
 
 import '../../screens/ProdDetailScreen.dart';
 import 'profile_menu.dart';
@@ -26,7 +27,10 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Захиалга",
             icon: "assets/icons/list-check.svg",
-            press: () {},
+            press: () { Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => OrderScreen()),
+            );},
           ),
           ProfileMenu(
             text: "Дуртай",
