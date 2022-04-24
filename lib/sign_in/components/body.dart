@@ -23,9 +23,9 @@ class Body extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
+
           children: [
             Container(
-              height: 510,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
