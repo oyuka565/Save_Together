@@ -193,4 +193,42 @@ class _ProdListScreen extends State<ProdListScreen> {
       });
     }
   }
+
+  Widget backButton() {
+    return Container(
+      child: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+            child: Row(
+              children: [
+                /* new Image.asset(
+                  globals.png_back_btn,
+                  width: 8,
+                  height: 7,
+                ),*/
+                SizedBox(
+                  width: 5,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Буцах',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: globals.blueColor,
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+    );
+  }
 }

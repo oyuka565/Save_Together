@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../model/UserList.dart';
@@ -19,54 +20,113 @@ import 'ProdDetailScreen.dart';
 
 //import 'NavigationMenu.dart';
 
-class NewsListScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _NewsListScreen createState() => _NewsListScreen();
+  _HomeScreen createState() => _HomeScreen();
 }
 
-class _NewsListScreen extends State<NewsListScreen> {
+class _HomeScreen extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> mainDrawerKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    readHomeData();
     super.initState();
   }
 
   late UserListResponse userInfo;
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     key: mainDrawerKey,
+  //     //drawer: NavigationMenuState(),
+  //     body: AnnotatedRegion<SystemUiOverlayStyle>(
+  //       value: SchedulerBinding.instance?.window.platformBrightness ==
+  //               Brightness.dark
+  //           ? SystemUiOverlayStyle.dark.copyWith(
+  //               statusBarColor: Colors.transparent,
+  //             )
+  //           : SystemUiOverlayStyle.light.copyWith(
+  //               statusBarColor: Colors.transparent,
+  //             ),
+  //       child: ModalProgressHUD(
+  //         inAsyncCall: globals.showProgress,
+  //         //opacity: 0.5,
+  //         progressIndicator: CircularProgressIndicator(),
+  //         child: Container(
+  //           child: SingleChildScrollView(
+  //             child: Column(
+  //               children: [
+  //                 //AppBar
+  //                 //orderAppBar.draw(context, mainDrawerKey),
+  //                 SizedBox(
+  //                   height: 10,
+  //                 ),
+  //
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      key: mainDrawerKey,
-      //drawer: NavigationMenuState(),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SchedulerBinding.instance?.window.platformBrightness ==
-                Brightness.dark
-            ? SystemUiOverlayStyle.dark.copyWith(
-                statusBarColor: Colors.transparent,
-              )
-            : SystemUiOverlayStyle.light.copyWith(
-                statusBarColor: Colors.transparent,
-              ),
-        child: ModalProgressHUD(
-          inAsyncCall: globals.showProgress,
-          //opacity: 0.5,
-          progressIndicator: CircularProgressIndicator(),
-          child: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //AppBar
-                  //orderAppBar.draw(context, mainDrawerKey),
-                  SizedBox(
-                    height: 10,
-                  ),
-
-                ],
-              ),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.accessibility),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.location_on),
+            SizedBox(width: 10 / 2),
+            Text(
+              "15/2 Ulaanbaatar",
+              style: Theme.of(context).textTheme.bodyText1,
             ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {},
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        padding:  EdgeInsets.all(5),
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Explore",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+            ),
+            const Text(
+              "best Outfits for you",
+              style: TextStyle(fontSize: 18),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical:5),
+              //child: SearchForm(),
+            ),
+           //const Categories(),
+            //const NewArrivalProducts(),
+            //const PopularProducts(),
+          ],
         ),
       ),
     );
@@ -127,7 +187,7 @@ class _NewsListScreen extends State<NewsListScreen> {
     );
   }
 
-  readNewsData() {
+  readHomeData() {
     try {
       setState(() {
         globals.showProgress = true;
