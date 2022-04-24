@@ -2,10 +2,11 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
   host: 'localhost',
-  database: 'api',
-  password: 'sa',
+  database: 'together',
+  password: 'password',
   port: 5432,
 })
+
 
 const getProd = (request, response) => {
   pool.query('SELECT * FROM public."Product" ORDER BY "ProductID" ASC', (error, results) => {
@@ -94,6 +95,21 @@ const getCategory = (request, response) => {
   })
 }
 
+const getProdByCategory = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query(''+
+  'select "Product".* from "Product" '+
+	' inner join "Product_Category" on "Product_Category"."ProductID" = "Product_Category"."ProductID" '+
+  ' inner join "Category" on "Product_Category"."CategoryID" = "Category"."CategoryID"'+
+  'WHERE "Category"."CategoryID" = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
       if (error) {
@@ -158,6 +174,7 @@ const getUsers = (request, response) => {
     createProd,
     updateProd,
     getCategory,
+    getProdByCategory,
     getUsers,
     getUserById,
     createUser,
