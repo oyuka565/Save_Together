@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 String version = '1.0.0';
 
 // Login
-String userId = "oyuka@gmail.com";
+String userId = "gganbold@gmail.com";
 
 //Colors
 const Color blackColor = Color(0xff444444);

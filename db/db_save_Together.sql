@@ -20,6 +20,9 @@ CREATE TABLE "Product" (
   "serial_no" text
 );
 
+ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "current_order_group_ID" bigint;
+
 CREATE TABLE "Product_Category" (
   "ProductID" int,
   "CategoryID" int
@@ -49,7 +52,7 @@ CREATE TABLE "Product_Review" (
 CREATE TABLE "order_person" (
   "Order_person_ID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
-  "User_ID" int,
+  "User_ID" varchar,
   "order_status" int,
   "subTotal" float,
   "ItemDiscount" float,
@@ -72,6 +75,10 @@ CREATE TABLE "order_person" (
   "image_url" text
 );
 
+ALTER TABLE IF EXISTS public."order_person"
+    ADD COLUMN "order_group_ID" bigint;
+
+
 CREATE TABLE "order_group" (
   "order_group_ID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
@@ -80,7 +87,7 @@ CREATE TABLE "order_group" (
 
 CREATE TABLE "Cart" (
   "Cart_ID" BIGSERIAL PRIMARY KEY,
-  "User_ID" int,
+  "User_ID" varchar,
   "status" int,
   "User_Fname" varchar,
   "User_Lname" varchar,

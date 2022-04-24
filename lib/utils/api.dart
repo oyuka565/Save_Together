@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:together_app/model/ProdModel.dart';
 
 import '../model/CategoryResponse.dart';
+import '../model/OrderModel.dart';
 import '../model/UserList.dart';
 import 'func.dart';
 import 'package:together_app/utils/globals.dart' as globals;
@@ -70,7 +71,7 @@ class APIService {
     }
     return res;
   }
-
+  /* Бүтээгдэхүүн хадгалах INSERT, UPDATE 2-лаа хийгдэнэ */
   Future<bool> saveProdInfo(ProductModel prod, bool isEdit) async {
     bool result = false;
     String urlProd = "/saveProd";
@@ -136,6 +137,117 @@ class APIService {
             'image_url': prod.imageUrl!
           }),
         );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
+  /* Хэрэглэгчийн захиалгын жагсаалт авах */
+  Future<OrderListResponse> getUserOrder() async {
+    String url = "/orders/" + globals.userId;
+    OrderListResponse res = new OrderListResponse(list: []);
+
+    try {
+      final response = await http.get(new Uri.http(globals.apiURL, url));
+      //await http.post(Uri.parse(url), headers: headers,body: "");
+      if (response.statusCode == 200) {
+        final jsonResp = jsonDecode(response.body);
+        res = OrderListResponse.fromJson(jsonResp);
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return res;
+  }
+
+  /* Захиалга өгөх буюу INSERT */
+  Future<bool> createOrder(OrderModel model) async {
+    bool result = false;
+    String urlOrder = "/order";
+
+    try {
+      var url = Uri.http(globals.apiURL, urlOrder);
+
+      var request = http.MultipartRequest("POST", url);
+
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.post(
+          new Uri.http(globals.apiURL, urlOrder),
+          headers: headers,
+          body: jsonEncode(<String, String>{
+            'User_ID': globals.userId,
+            'discount': Func.toStr(model.discount!),
+            'ProductID': Func.toStr(model.productID!),
+            'quantity': Func.toStr(model.quantity!),
+            'grandTotal': Func.toStr(model.grandTotal!)
+          }),
+        );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
+
+  /* Захиалга засах буюу UPDATE */
+  Future<bool> updateOrder(OrderModel model) async {
+    bool result = false;
+    String urlOrder = "/order/"+ Func.toStr(model.orderPersonID!);
+
+    try {
+      var url = Uri.http(globals.apiURL, urlOrder);
+      var request = http.MultipartRequest("PUT", url);
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.post(
+        new Uri.http(globals.apiURL, urlOrder),
+        headers: headers,
+        body: jsonEncode(<String, String>{
+          'Order_person_ID': Func.toStr(model.orderPersonID!),
+          'User_ID': globals.userId,
+          'discount': Func.toStr(model.discount!),
+          'ProductID': Func.toStr(model.productID!),
+          'quantity': Func.toStr(model.quantity!),
+          'grandTotal': Func.toStr(model.grandTotal!)
+        }),
+      );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
+
+  /* Захиалга цуцлах буюу DELETE */
+  Future<bool> deleteOrder(String orderPersonID) async {
+    bool result = false;
+    String urlOrder = "/order/"+ Func.toStr(orderPersonID);
+
+    try {
+      var url = Uri.http(globals.apiURL, urlOrder);
+      var request = http.MultipartRequest("DELETE", url);
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.post(
+        new Uri.http(globals.apiURL, urlOrder),
+        headers: headers,
+        body: jsonEncode(<String, String>{
+          'Order_person_ID': orderPersonID
+        }),
+      );
       if (response.statusCode == 200) {
         result = true;
       }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/register_page.dart';
+import 'package:together_app/screens/OrderScreen.dart';
 import 'package:together_app/screens/ProdDetailScreen.dart';
 import 'package:together_app/screens/ProdListScreen.dart';
 import 'login_page.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/':(context) => ProdListScreen(),
+        '/':(context) => OrderScreen(),
         '/register':(context) => const RegisterPage(),
       },
     );
