@@ -52,7 +52,7 @@ String userToken = "";
 String deviceCode = "";
 String orderId = "";
 bool showProgress = false;
-
+int selectedCategoryID = 0; //Сонгогдсон категори
 int indexPromo = 0; // Идэвхтэй промогийн дугаар
 bool isAddressNew = true;
 bool isAddressFillingFromSelection = false;

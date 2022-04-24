@@ -37,6 +37,9 @@ CREATE TABLE "Category" (
   "content" text
 );
 
+ALTER TABLE IF EXISTS "Category"
+    ADD COLUMN image_url text;
+	
 CREATE TABLE "Product_Review" (
   "reviewID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,

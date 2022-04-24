@@ -3,14 +3,14 @@ import 'package:together_app/components/rounded_icon_btn.dart';
 import 'package:together_app/model/Product.dart';
 import 'package:together_app/utils/globals.dart';
 
+import '../../model/ProdModel.dart';
+
 
 class ColorDots extends StatelessWidget {
-  const ColorDots({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
+  const ColorDots(this.product
+  ) ;
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class ColorDots extends StatelessWidget {
           EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          ...List.generate(
+          /*...List.generate(
             product.colors.length,
             (index) => ColorDot(
               color: product.colors[index],
               isSelected: index == selectedColor,
             ),
-          ),
+          ),*/
           Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,

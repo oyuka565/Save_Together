@@ -1,15 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:together_app/model/Product.dart';
 import 'package:together_app/utils/globals.dart';
 
+import '../../model/ProdModel.dart';
+
 
 class ProductImages extends StatefulWidget {
-  const ProductImages({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
+  const ProductImages(this.product);
 
-  final Product product;
+  final ProductModel product;
 
   @override
   _ProductImagesState createState() => _ProductImagesState();
@@ -26,8 +27,11 @@ class _ProductImagesState extends State<ProductImages> {
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(widget.product.images[selectedImage]),
+              tag: widget.product.productID.toString(),
+              child: //Image.asset(widget.product.imageUrl!),
+              Image.file(
+                File(widget.product.imageUrl!),
+              )
             ),
           ),
         ),
@@ -35,7 +39,7 @@ class _ProductImagesState extends State<ProductImages> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...List.generate(widget.product.images.length,
+            ...List.generate(1,//widget.product.images.length,
                 (index) => buildSmallProductPreview(index)),
           ],
         )
@@ -62,7 +66,7 @@ class _ProductImagesState extends State<ProductImages> {
           border: Border.all(
               color: yellowColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(widget.product.images[index]),
+        child: Image.asset(widget.product.imageUrl!),
       ),
     );
   }
