@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:together_app/components/default_button.dart';
-import 'package:together_app/utils/globals.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
@@ -36,46 +35,23 @@ class CheckoutCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SvgPicture.asset("assets/icons/receipt.svg"),
+              children: const <Widget>[
+                Expanded(
+                  child: Text('Нийт', textAlign: TextAlign.center),
                 ),
-                Spacer(),
-                Text("Хямдралын кодыг оруулна уу"),
-                const SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: hintGrayColor,
-                )
+                Expanded(
+                  child: Text('55000', textAlign: TextAlign.center),
+                ),
               ],
             ),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text.rich(
-                  TextSpan(
-                    text: "Нийт:\n",
-                    children: [
-                      TextSpan(
-                        text: "\337000₮",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(
-                  width: 190,
+                  width: 300,
                   child: DefaultButton(
-                    text: "Төлбөр төлөх",
+                    text: "Төлөх",
                     press: () {},
                   ),
                 ),
