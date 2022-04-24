@@ -66,7 +66,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Нийт:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
+                        text: "\337000₮",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
@@ -75,7 +75,7 @@ class CheckoutCard extends StatelessWidget {
                 SizedBox(
                   width: 190,
                   child: DefaultButton(
-                    text: "Гарах",
+                    text: "Төлбөр төлөх",
                     press: () {},
                   ),
                 ),

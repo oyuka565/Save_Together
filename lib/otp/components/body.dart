@@ -16,9 +16,9 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               Text(
-                "OTP Verification",
+                "Баталгаажуулах код",style: TextStyle(color: yellowColor,fontSize: 20)
               ),
-              Text("We sent your code to +976 860 ***"),
+              Text("Таны утсанд мессэжээр ирсэн 4 оронтой \nбаталгаажуулах кодыг оруулна уу."),
               buildTimer(),
               OtpForm(),
               SizedBox(height: 20),
@@ -27,7 +27,7 @@ class Body extends StatelessWidget {
                   // OTP code resend
                 },
                 child: Text(
-                  "Resend OTP Code",
+                  "Дахин код авах",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
@@ -42,7 +42,7 @@ class Body extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("This code will expired in "),
+        Text("Кодын хүчинтэй хугацаа:"),
         TweenAnimationBuilder(
           tween: Tween(begin: 30.0, end: 0.0),
           duration: Duration(seconds: 30),

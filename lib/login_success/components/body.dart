@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/components/default_button.dart';
 import 'package:together_app/home/home_screen.dart';
+import 'package:together_app/size_config.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10),
+        SizedBox(height: SizeConfig.screenHeight * 0.04),
         Image.asset(
           "assets/images/success.png",
-          height: 40, //40%
+          height: SizeConfig.screenHeight * 0.4, //40%
         ),
-        SizedBox(height: 10),
+        SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
           "Амжилттай нэвтэрлээ",
           style: TextStyle(
@@ -23,9 +24,9 @@ class Body extends StatelessWidget {
         ),
         Spacer(),
         SizedBox(
-          width: 10,
+          width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
-            text: "Нүүр хуудасруу буцах",
+            text: "Эхлэх",
             press: () {
               Navigator.pushNamed(context, HomeScreen.routeName);
             },

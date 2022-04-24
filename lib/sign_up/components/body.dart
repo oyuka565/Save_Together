@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/components/socal_card.dart';
 import 'sign_up_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:together_app/utils/globals.dart' as globals;
 
 class Body extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
+  var currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
