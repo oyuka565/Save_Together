@@ -60,97 +60,138 @@ const getUserOrders = (request, response) => {
     })
   }
 
-
   async function createOrder  (request, response)  {
     try {
       const { User_ID,	ProductID, discount, quantity,	grandTotal} = request.body
       // console.log(request.body) 
       // Хэрэв захиалгын багц дүүрсэн бол 0, дүүрээгүй бол БАГЦЫН ДУГААР буцаана
-      var groupID 
-
-      db.tx(async t => {
-          
-      var sql =''+
-      'SELECT CASE WHEN "order_group"."order_quantity" + 1 < "Product"."group_qty" THEN "Product"."current_order_group_ID" '+
+      var groupID = 0
+ 
+      db.any('SELECT CASE WHEN "order_group"."order_quantity" + 1 < "Product"."group_qty" THEN "Product"."current_order_group_ID" '+
       '        ELSE 0 END groupid '+
       'FROM "order_group" '+
       '	inner join "Product" on '+
       '		"order_group"."order_group_ID" = "Product"."current_order_group_ID" '+
-      'WHERE "Product"."ProductID" = $1';
-      const user = await t.one(sql, ProductID);
-      return {user};}
-      )
-      .then(({user}) => {
-        // print new user id + new event id;
-        console.log('DATA:', user.rows[0].groupid);
-    })
-    .catch(error => {
-        console.log('ERROR:', error); // print the error;
-    });
-      const res = await pool.query(sql, (error, results) => {
-          if (error) {
-              throw error
-            }
-            
-           console.log('results =' +results) 
-      })
-      console.log('res =' +res) 
-        
-      groupID =rows[0].groupid
-      console.log('groupID=' + groupID) 
-      // Хэрэв захиалга дүүрсан бол
-      if (groupID === 0) {
-        console.log('Захиалга дүүрсэн') 
+      'WHERE "Product"."ProductID" = $1', [ProductID])
+      .then(data => {
+          console.log('DATA:', data); // print data;
+          if (data === undefined)
+            groupID = 0
+          else
+            groupID = data[0].groupid
+          console.log('groupID:', groupID);
+  
+        // Хэрэв захиалга дүүрсан бол
+        if (groupID == '0') {
+          console.log('Захиалга дүүрсэн') 
           // Групп захиалга руу бичилт нэмнэ
-        pool.query('INSERT INTO "order_group" ("ProductID", "order_quantity") VALUES ($1,$2) RETURNING "order_group_ID"'
-        , [ProductID, quantity],(error, results) => {
-            if (error) {
-                throw error
-              }
-              groupID = results.rows[0].order_group_ID;
-        })
-        console.log('new groupid =' +groupID) 
-        // Product-н current_order_group_ID, current_order_qty-г шинэчилнэ  
-        pool.query('UPDATE public."Product" SET ' +
-        '  "current_order_qty" = 0, "current_order_group_ID" = $2 WHERE "ProductID" = $1' 
-        , [ProductID, groupID], (error, results) => {
-          if (error) {
-            throw error
-          }
-        })
-      }
-      console.log('Insert order_person ') 
-      pool.query('INSERT INTO public."order_person" '+
-      '("User_ID", "ProductID", "order_status", '+
-      ' "discount", "quantity",	"grandTotal",'+
-      ' "order_group_ID", "createdAt") '+
-      ' VALUES ($1, $2, 0,  ' +
-      '         $3, $4, $5, '+
-      '         $6, current_date)' ,
-       [User_ID, ProductID, discount, quantity, grandTotal, groupID], (error, results) => {
-        if (error) { 
-          throw error
-        }  
-      })
-   
-      console.log('UPDATE public."Product" SET ') 
-      pool.query('UPDATE public."Product" SET ' +
-      '  "current_order_qty" = "current_order_qty" + $2 WHERE "ProductID" = $1' 
-        , [ProductID, quantity], (error, results) => {
-        if (error) {
-          throw error
-        }
-      })
-      console.log('UPDATE public."order_group" SET ProductID=' + ProductID +' groupID='+groupID +' quantity='+ quantity) 
-      pool.query('UPDATE public."order_group" SET ' +
-      '  "order_quantity" = "order_quantity" + $3 WHERE "ProductID" = $1 AND "order_group_ID" = $2 ' 
-        , [ProductID, groupID, quantity], (error, results) => {
-        if (error) {
-          throw error
-        }
-      })
-      response.status(200).send() //results.rows[0].ProductId)  
+          db.one('INSERT INTO "order_group" ("ProductID", "order_quantity") VALUES ($1,$2) RETURNING "order_group_ID"'
+            , [ProductID, quantity])
+            .then(data => {
+              console.log(data.order_group_ID); // print new user id;
+              groupID = data.order_group_ID
 
+              console.log('UPDATE бүтээгдэхүүний current талбаруудыг шинэчилнэ- new groupid =' +groupID) 
+
+              db.none('UPDATE public."Product" SET ' +
+                '  "current_order_qty" = 0, "current_order_group_ID" = $2 WHERE "ProductID" = $1'
+                , [ProductID, groupID])
+                .then(() => {
+                  // success;
+                  })
+              .catch(error => {
+                  console.log('ERROR - UPDATE Product:', error); // print error;
+              }); 
+
+              console.log('Insert order_person ') 
+              db.none('INSERT INTO public."order_person" '+
+              '("User_ID", "ProductID", "order_status", '+
+              ' "discount", "quantity",	"grandTotal",'+
+              ' "order_group_ID", "createdAt") '+
+              ' VALUES ($1, $2, 0,  ' +
+              '         $3, $4, $5, '+
+              '         $6, current_date)' ,
+              [User_ID, ProductID, discount, quantity, grandTotal, groupID])
+              .then(() => {
+                // success;
+                })
+              .catch(error => {
+                  console.log('ERROR Insert order_person:', error); // print error;
+              });
+
+              console.log('UPDATE public."Product" SET ') 
+              db.none('UPDATE public."Product" SET ' +
+              '  "current_order_qty" = "current_order_qty" + $2 WHERE "ProductID" = $1' 
+                , [ProductID, quantity])
+                .then(() => {
+                  // success;
+              })
+              .catch(error => {
+                  console.log('ERROR - UPDATE Product:', error); // print error;
+              });
+
+              console.log('UPDATE public."order_group" SET ProductID=' + ProductID +' groupID='+groupID +' quantity='+ quantity) 
+              db.none('UPDATE public."order_group" SET ' +
+              '  "order_quantity" = "order_quantity" + $3 WHERE "ProductID" = $1 AND "order_group_ID" = $2' 
+                , [ProductID, groupID, quantity])
+                .then(() => {
+                  // success;
+                  })
+              .catch(error => {
+                  console.log('ERROR - UPDATE Product:', error); // print error;
+              });
+        
+              response.status(200).send() //results.rows[0].ProductId) 
+          })
+          .catch(error => {
+              console.log('ERROR - Групп захиалга руу бичилт нэмнэ:', error); // print error;
+          });
+            
+        } else {
+            console.log('Insert order_person ') 
+            db.none('INSERT INTO public."order_person" '+
+            '("User_ID", "ProductID", "order_status", '+
+            ' "discount", "quantity",	"grandTotal",'+
+            ' "order_group_ID", "createdAt") '+
+            ' VALUES ($1, $2, 0,  ' +
+            '         $3, $4, $5, '+
+            '         $6, current_date)' ,
+            [User_ID, ProductID, discount, quantity, grandTotal, groupID])
+            .then(() => {
+              // success;
+              })
+            .catch(error => {
+                console.log('ERROR Insert order_person:', error); // print error;
+            });
+
+            console.log('UPDATE public."Product" SET ') 
+            db.none('UPDATE public."Product" SET ' +
+            '  "current_order_qty" = "current_order_qty" + $2 WHERE "ProductID" = $1' 
+              , [ProductID, quantity])
+              .then(() => {
+                // success;
+            })
+            .catch(error => {
+                console.log('ERROR - UPDATE Product:', error); // print error;
+            });
+
+            console.log('UPDATE public."order_group" SET ProductID=' + ProductID +' groupID='+groupID +' quantity='+ quantity) 
+            db.none('UPDATE public."order_group" SET ' +
+            '  "order_quantity" = "order_quantity" + $3 WHERE "ProductID" = $1 AND "order_group_ID" = $2' 
+              , [ProductID, groupID, quantity])
+              .then(() => {
+                // success;
+                })
+            .catch(error => {
+                console.log('ERROR - UPDATE Product:', error); // print error;
+            });
+      
+            response.status(200).send() //results.rows[0].ProductId)  
+        }
+      })
+      .catch(error => {
+          console.log('ERROR:', error); // print the error;
+      }); 
   } catch (err) {
       console.error(err.message)
   }
