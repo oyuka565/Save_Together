@@ -28,9 +28,8 @@ class HamtdaaBar extends StatelessWidget {
         child: Text('Hamtdaa',  textAlign: TextAlign.center, style: TextStyle(fontFamily: 'WaterBrush-Regular', fontSize: 34)),
       ),
         IconBtnWithCounter(
-          svgSrc: "assets/icons/Bell.svg",
-          numOfitem: 3,
-          press: () {},
+          svgSrc: "assets/icons/Cart Icon.svg",
+          press: ()  => Navigator.pushNamed(context, CartScreen.routeName),
         ),
     ],
     ),

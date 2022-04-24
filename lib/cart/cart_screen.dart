@@ -20,7 +20,7 @@ class CartScreen extends StatelessWidget {
       title: Column(
         children: [
           Text(
-            "Your Cart",
+            "Таны сагс",
             style: TextStyle(color: Colors.black),
           ),
           Text(

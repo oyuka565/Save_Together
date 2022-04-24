@@ -38,8 +38,8 @@ List<Product> demoProducts = [
       Color(0xFFDECB9C),
       Colors.white,
     ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
+    title: "PS4-н утасгүй гар",
+    price: 158900,
     description: description,
     rating: 4.8,
     isFavourite: true,
@@ -56,9 +56,9 @@ List<Product> demoProducts = [
       Color(0xFFDECB9C),
       Colors.white,
     ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
+    title: "Nike эрэгтэй шорт",
+    price: 121900,
+    description: description1,
     rating: 4.1,
     isPopular: true,
   ),
@@ -73,9 +73,9 @@ List<Product> demoProducts = [
       Color(0xFFDECB9C),
       Colors.white,
     ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
+    title: "Gloves XC Omega бээлий",
+    price: 54350,
+    description: description2,
     rating: 4.1,
     isFavourite: true,
     isPopular: true,
@@ -92,12 +92,18 @@ List<Product> demoProducts = [
       Colors.white,
     ],
     title: "Logitech Head",
-    price: 20.20,
-    description: description,
+    price: 220800,
+    description: description2,
     rating: 4.1,
     isFavourite: true,
   ),
 ];
 
 const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+    "PS4™-д зориулсан Wireless Controller нь тоглоомуудаа мэдрэн хүссэн зүйлээ өгөх болно...";
+
+const String description1 =
+    "Өмсөөгүй мэт суналттай хөнгөн агаар нэвтрүүлдэг";
+
+const String description2 =
+    "Агаарын солилцоо сайтай халитардаггүй";

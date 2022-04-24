@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:together_app/cart/components/body.dart';
-import 'package:together_app/profile/profile_screen.dart';
-import 'package:together_app/register_page.dart';
-import 'package:together_app/screens/OrderScreen.dart';
-import 'package:together_app/screens/ProdDetailScreen.dart';
-import 'package:together_app/screens/ProdListScreen.dart';
-import 'package:together_app/login_page.dart';
-import 'package:together_app/home/home_screen.dart';
 import 'package:together_app/splash/splash_screen.dart';
-import 'login_page.dart';
 import 'package:together_app/complete_profile/complete_profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:together_app/routes.dart';
@@ -32,9 +23,9 @@ class MyApp extends StatelessWidget {
     debugShowCheckedModeBanner: false,
       title: 'ХАМТДАА',
       theme: theme(),
-      initialRoute: SplashScreen.routeName,
       // home: HomeScreen(),
-      routes: routes,
+      initialRoute: SplashScreen.routeName,
+           routes: routes,
     );
   }
 }
