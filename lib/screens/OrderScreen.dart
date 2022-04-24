@@ -2,6 +2,8 @@
 //import 'package:TOMO/model/NewsList.dart';
 //import 'package:TOMO/screens/NewsDetailScreen.dart';
 //import 'package:TOMO/templates/OrderAppBar.dart' as orderAppBar;
+import 'dart:io';
+
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:together_app/model/ProdModel.dart';
 import 'package:together_app/templates/popUp.dart';
@@ -15,6 +17,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import '../components/coustom_bottom_nav_bar.dart';
+import '../enums.dart';
 import '../model/OrderModel.dart';
 import '../model/UserList.dart';
 import '../templates/AppMenu.dart';
@@ -64,20 +68,60 @@ class _OrderScreen extends State<OrderScreen> {
                 children: [
                   //AppBar
                   //orderAppBar.draw(context, mainDrawerKey),
+                  backButton(),
+                  Text(
+                    "Таны захиалга",
+                    style: TextStyle(color: Colors.black),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
                   buildOrderList(),
                   insertOrderButton(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  buildIconNavBar(context),
                 ],
               ),
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+    );
+  }
+
+  Widget backButton() {
+    return Container(
+      child: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+            child: Row(
+              children: [
+                /* new Image.asset(
+                  globals.png_back_btn,
+                  width: 8,
+                  height: 7,
+                ),*/
+                SizedBox(
+                  width: 5,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Буцах',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: globals.blueColor,
+                    ),
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -93,7 +137,7 @@ class _OrderScreen extends State<OrderScreen> {
             return Row(
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 100,
                 ),
                 GestureDetector(
                     onTap: () {
@@ -107,10 +151,11 @@ class _OrderScreen extends State<OrderScreen> {
                       //    .push(_orderDetailsScreenRoute());
                     },
 
-                    child: Image.asset(
-                      orderList.list[index].imageUrl!,
-                      width: 90,
-                      height: 90,
+                    child: Image.file(
+                      File(
+                      orderList.list[index].imageUrl!),
+                      width: 85,
+                      height: 85,
                       fit: BoxFit.cover,
                     )
                 ),
@@ -163,7 +208,8 @@ class _OrderScreen extends State<OrderScreen> {
                 Divider(),
               ],
 
-            )]);
+            ),
+                ]);
           }),
     );
   }

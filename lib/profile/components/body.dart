@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:together_app/screens/OrderScreen.dart';
 
 import '../../screens/ProdDetailScreen.dart';
+import '../../screens/ProdListScreen.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -43,7 +44,7 @@ class Body extends StatelessWidget {
             press: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProdDetailScreen(0)),
+                MaterialPageRoute(builder: (context) => ProdListScreen()),
               );
             },
           ),

@@ -97,6 +97,11 @@ class APIService {
       var response = await request.send();*/
       final headers = {"Content-type": "application/json;charset=UTF-8"};
       var response;
+
+      if (prod.imageUrl !=null){
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath('imageUrl', prod.imageUrl!,);
+        request.files.add(multipartFile);
+      }
       if (isEdit)
         response = await http.put(
           new Uri.http(globals.apiURL, urlProd),

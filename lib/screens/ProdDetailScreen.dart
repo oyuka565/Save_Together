@@ -1,4 +1,6 @@
-import 'package:flutter/rendering.dart';
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:together_app/model/ProdModel.dart';
 import 'package:together_app/screens/ProdListScreen.dart';
@@ -43,6 +45,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   final TextEditingController _ctrImageUrl = TextEditingController();
 
   String _selectedCategory = "";
+  bool isImageSelected = false;
 
   final String _strProdTitle = "";
   final String _strProdSummary = "";
@@ -54,7 +57,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   //String _strCurrentOrderQty = "";
   final String _strContent = "";
   final String _strSerialNo = "";
-  final String _strImageUrl = "";
+  String _strImageUrl = "";
 
   String _errorMessage = "";
   bool validationPassed = true;
@@ -164,7 +167,14 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                         SizedBox(
                           height: 5,
                         ),
-                        buildImageUrl(),
+                        //buildImageUrl(),
+
+                        buildImageUrlPicker(isImageSelected, _strImageUrl,
+                            (file) {
+                          _strImageUrl = file.path;
+                          _ctrImageUrl.text = file.path;
+                          isImageSelected = true;
+                        }),
                         SizedBox(
                           height: 20,
                         ),
@@ -477,6 +487,81 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     );
   }
 
+  Widget buildImageUrlPicker(
+      bool isFileSelected, String fileName, Function onFilePicket) {
+    Future<XFile?> _imageFile;
+    ImagePicker _picker = ImagePicker();
+    return Center(
+      child: Container(
+        width: 80,
+        height: 120,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              fileName.isNotEmpty
+                  ? isFileSelected
+                      ? Image.file(
+                          File(fileName),
+                          height: 80,
+                          width: 120,
+                        )
+                      : SizedBox(
+                          child: Image.asset(
+                            "assets/images/noimageavailable.jpg",
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        )
+                  : SizedBox(
+                      child: Image.asset(
+                        "assets/images/instagram.png",
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(
+                        Icons.image,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        _imageFile =
+                            _picker.pickImage(source: ImageSource.gallery);
+                        _imageFile.then((file) async {
+                          onFilePicket(file);
+                        });
+                      },
+                    )),
+                SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(
+                        Icons.camera,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        _imageFile =
+                            _picker.pickImage(source: ImageSource.camera);
+                        _imageFile.then((file) async {
+                          onFilePicket(file);
+                        });
+                      },
+                    ))
+              ]),
+            ]),
+      ),
+    );
+  }
+
   Widget buildCategoryDropDown() {
     return new InputDecorator(
         decoration: const InputDecoration(
@@ -736,6 +821,9 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       _ctrGroupQty.text = Func.toStr(prodInfo.list[0].groupQty!);
       _ctrContent.text = prodInfo.list[0].content!;
       _ctrSerialNo.text = prodInfo.list[0].serialNo!;
+
+      isImageSelected = true;
+      _strImageUrl = prodInfo.list[0].imageUrl!;
       _ctrImageUrl.text = prodInfo.list[0].imageUrl!;
     }
   }
