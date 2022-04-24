@@ -1,88 +1,233 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:together_app/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
-import 'package:snippet_coder_utils/ProgressHUD.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:together_app/utils/globals.dart' as globals;
 
-class LoginPage extends StatefulWidget{
-  const LoginPage ({Key? key}) : super(key: key);
 
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-class _LoginPageState extends State<LoginPage>{
+String _email = '';
+String _password = '';
 
-  bool isAPIcallProcess = false;
-  bool hidePassword = true;
-  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  String? userName;
-  String? password;
+class LogInPage extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
+  var currentUser = FirebaseAuth.instance.currentUser;
 
   @override
-  Widget build (BuildContext context){
-    return SafeArea(
-        child: Scaffold(
-          backgroundColor: HexColor("#283B71"),
-          body: ProgressHUD(
-            child: Form(
-              key: globalFormKey,
-              child: _loginUI(context),
-            ),
-            inAsyncCall: isAPIcallProcess,
-            opacity: 0.3,
-            key: UniqueKey(),
+  void initState() {}
 
-          ),
-        )
-      );
-  }
+  get onPressed => null;
 
-  Widget _loginUI(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.white, Colors.white]),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(100),
-                bottomRight: Radius.circular(100)
-              )
-            ),
-          ),
-           
-            Padding (
-              padding: const EdgeInsets.only(
-                left: 20, bottom: 30, top: 50,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios),
+          iconSize: 20,
+          color: Colors.black,
+        ),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        "Нэвтрэх",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        "Та өөрийн мэдээллийг оруулна уу",
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(children: [
+                      inputFile(label: "Имэйл"),
+                      inputPass(label: "Нууц үг", obscureText: true),
+                    ]),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 30, left: 3),
+                      child: MaterialButton(
+                        minWidth: double.infinity,
+                        height: 37,
+                        onPressed: () async {
+                          try {
+                            final user = await _auth.signInWithEmailAndPassword(
+                                email: _email, password: _password);
+
+                            if (user != null) {
+                              print("Success");
+                              Navigator.pushNamed(context, '/landingpage');
+                            } else {
+                              print("Хэрэглэгч олдсонгүй");
+                            }
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        // {
+                        //   Navigator.push(
+
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => HomePage()));
+                        // }
+                        // color: Color.fromARGB(255, 255, 125, 168),
+                        // elevation: 0,
+                        // shape: RoundedRectangleBorder(
+                        //   borderRadius: BorderRadius.circular(50),
+                        // ),
+                        child: Container(
+                          child: Text(
+                            "Нэвтрэх",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      //Future LogIn() async{
+                      // await Firebase instance.signInWithEmailAndPassword
+                      //}
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Бүртгэл байхгүй юу? "),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpPage()));
+                        },
+                        child: Container(
+                            child: Text(
+                              "Бүртгүүлэх",
+                              style: TextStyle(
+                                color: globals.yellowColor,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            child: Text("Login",
-              style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Colors.white,
             ),
-            ),
-            ),
-          FormHelper.inputFieldWidget(context, "username", "User Name",
-              (onValidateVal){
-                if (onValidateVal.isEmpty) {
-                  return "Usernme can\'t be empty.";
-                }
-              },
-              (onSavedVal){
-                userName = onSavedVal;
-              },
-              borderFocusColor: Colors.white,
-            prefixIconColor: Colors.white,
-              )
-        ],
+          ],
+        ),
       ),
     );
   }
+}
+
+Widget inputFile({label, obscureText = false}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        label,
+        style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+      ),
+      SizedBox(
+        height: 5,
+      ),
+      TextField(
+        onChanged: (value) {
+          _email = value;
+        },
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 10,
+      ),
+    ],
+  );
+}
+
+Widget inputPass({label, obscureText = false}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        label,
+        style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+      ),
+      SizedBox(
+        height: 5,
+      ),
+      TextField(
+        onChanged: (value) {
+          _password = value;
+        },
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 10,
+      ),
+    ],
+  );
 }

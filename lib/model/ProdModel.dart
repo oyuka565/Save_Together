@@ -58,6 +58,8 @@ class ProductModel {
         this.serialNo,
         this.imageUrl});
 
+
+
   ProductModel.fromJson(Map<String, dynamic> json) {
     productID =  Func.toInt(json['ProductID']);
     userID = json['User_ID'];

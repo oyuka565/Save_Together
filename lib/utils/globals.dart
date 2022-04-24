@@ -27,10 +27,22 @@ const Color hintGrayColor = Color(0xff9B9B9B);
 //Url
 const String apiURL = "10.0.2.2:3000";
 
+const kAnimationDuration = Duration(milliseconds: 200);
+const defaultDuration = Duration(milliseconds: 250);
 //images
 String png_server_error = "assets/images/server_error.png";
 String png_back_btn = "assets/images/back_btn.png";
 
+final RegExp emailValidatorRegExp =
+RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+const String kEmailNullError = "Майл хаягаа оруулна уу";
+const String kInvalidEmailError = "Зөв майл хаягаа оруулна уу";
+const String kPassNullError = "Нууц үгээ оруулна уу";
+const String kShortPassError = "Нууц үг хэт богино байна";
+const String kMatchPassError = "Нууц үг таарахгүй байна";
+const String kNamelNullError = "Нэрээ оруулна уу";
+const String kPhoneNumberNullError = "Утасны дугаараа оруулна уу";
+const String kAddressNullError = "Хаягаа оруулна уу";
 
 String msg_HTTP = "Сервертэй холбогдож барсангүй!";
 String msg_SAVE = "Захиалга бүртгэхэд алдаа гарлаа!";
@@ -46,4 +58,23 @@ bool isAddressNew = true;
 bool isAddressFillingFromSelection = false;
 
 bool newAddressFromSubmitOrder = false;
+
+final otpInputDecoration = InputDecoration(
+  contentPadding:
+  EdgeInsets.symmetric(vertical: 15),
+);
+
+final headingStyle = TextStyle(
+  fontSize: 28,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  height: 1.5,
+);
+
+OutlineInputBorder outlineInputBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+    borderSide: BorderSide(color: hintGrayColor),
+  );
+}
 

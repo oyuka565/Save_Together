@@ -9,8 +9,6 @@ const pool = new Pool({
 
 const getProd = (request, response) => {
   pool.query('SELECT * FROM public."Product" ORDER BY "ProductID" ASC', (error, results) => {
-<<<<<<< HEAD
-=======
     if (error) {
       throw error
     }
@@ -89,7 +87,6 @@ const updateProd = (request, response) => {
 
 const getCategory = (request, response) => {
   pool.query('SELECT * FROM public."Category"', (error, results) => {
->>>>>>> 659d1200e97fb5258203acc7f3d5b05d8706d57b
     if (error) {
       throw error
     }
