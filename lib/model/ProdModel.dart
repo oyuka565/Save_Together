@@ -38,9 +38,11 @@ class ProductModel {
   String? imageUrl;
   bool isFavourite = true;
   double rating = 4.5;
+  int? categoryID;
 
   ProductModel(
       {this.productID,
+        this.categoryID,
         this.userID,
         this.prodcutTitle,
         this.metaTitle,
@@ -60,10 +62,9 @@ class ProductModel {
         this.serialNo,
         this.imageUrl});
 
-
-
   ProductModel.fromJson(Map<String, dynamic> json) {
     productID =  Func.toInt(json['ProductID']);
+    categoryID =  Func.toInt(json['CategoryID']==null?10:json['CategoryID']);
     userID = json['User_ID'];
     prodcutTitle = json['prodcut_title'];
     metaTitle = json['metaTitle'];
@@ -87,6 +88,7 @@ class ProductModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ProductID'] = this.productID;
+    data['CategoryID'] = this.categoryID;
     data['User_ID'] = this.userID;
     data['prodcut_title'] = this.prodcutTitle;
     data['metaTitle'] = this.metaTitle;

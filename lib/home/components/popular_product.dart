@@ -42,7 +42,7 @@ class _PopularProducts extends State<PopularProducts> {
               ...List.generate(
                 prodList.list.length,
                 (index) {
-                  if (demoProducts[index].isPopular)
+                  if (prodList.list.isNotEmpty)
                     return ProductCard(prodList.list[index]);
 
                   return SizedBox

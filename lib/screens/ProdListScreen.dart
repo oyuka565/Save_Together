@@ -95,62 +95,77 @@ class _ProdListScreen extends State<ProdListScreen> {
       child: ListView.builder(
           itemCount: (prodList.list.length),
           itemBuilder: (BuildContext, index) {
-            return
-                Row(
-                  children: [
+            return Row(
+              children: [
                 SizedBox(
-                  height: 10,
+                  height: 100,
                 ),
                 GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                ProdDetailScreen(prodList.list[index].productID)),
+                            builder: (context) => ProdDetailScreen(
+                                prodList.list[index].productID)),
                       );
                       //Navigator.of(context)
                       //    .push(_orderDetailsScreenRoute());
                     },
+                    child: (File(prodList.list[index].imageUrl!).existsSync()
+                        ? Image.file(
+                            File(prodList.list[index].imageUrl!),
+                            width: 85,
+                            height: 85,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                          "assets/images/noimageavailable.jpg",
+                            width: 85,
+                            height: 85,
+                            fit: BoxFit.cover,
+                          ))),
 
-                    child: Image.file(
-                      File(
-                          prodList.list[index].imageUrl!),
-                      width: 85,
-                      height: 85,
-                      fit: BoxFit.cover,
-                    )
+                SizedBox(
+                  width: 10,
                 ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  ProdDetailScreen(prodList.list[index].productID)),
+                              builder: (context) => ProdDetailScreen(
+                                  prodList.list[index].productID)),
                         );
                         //Navigator.of(context)
                         //    .push(_orderDetailsScreenRoute());
                       },
-                      child: Text(
-                        prodList.list[index].prodcutTitle!,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: globals.blueColor,
-                            fontWeight: FontWeight.bold),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.9 - 110,
+                        child: Text(
+                          prodList.list[index].prodcutTitle!,
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: globals.blueColor,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                    Text(
-                      prodList.list[index].summary!,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: globals.grayColor,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9 - 110,
+                      child: Text(
+                        prodList.list[index].summary!,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: globals.grayColor,
+                        ),
                       ),
                     ),
                     // actionLocation, actionActualDate

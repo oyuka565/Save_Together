@@ -14,7 +14,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import '../model/CategoryResponse.dart';
+import '../model/CategoryModel.dart';
 import '../utils/api.dart';
 
 //import 'NavigationMenu.dart';
@@ -65,9 +65,10 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   @override
   void initState() {
     super.initState();
+
+    fillDropDownLists();
     readData();
     fillControls();
-    fillDropDownLists();
     /* _ctrProdPrice.addListener(() {
       validatePrice();
     });
@@ -493,8 +494,8 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     ImagePicker _picker = ImagePicker();
     return Center(
       child: Container(
-        width: 80,
-        height: 120,
+        width: 155,
+        height: 155,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -502,22 +503,22 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                   ? isFileSelected
                       ? Image.file(
                           File(fileName),
-                          height: 80,
+                          height: 120,
                           width: 120,
                         )
                       : SizedBox(
                           child: Image.asset(
                             "assets/images/noimageavailable.jpg",
-                            width: 80,
-                            height: 80,
+                            width: 120,
+                            height: 120,
                             fit: BoxFit.scaleDown,
                           ),
                         )
                   : SizedBox(
                       child: Image.asset(
                         "assets/images/instagram.png",
-                        width: 80,
-                        height: 80,
+                        width: 120,
+                        height: 120,
                         fit: BoxFit.scaleDown,
                       ),
                     ),
@@ -586,9 +587,12 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                     onChanged: (newValue) {
                       if (mounted) {
                         if (categoryList.list.length == 0)
-                          _selectedCategory = "";
+                          setState(() {
+                          _selectedCategory = "";});
                         else
+                          setState(() {
                           _selectedCategory = Func.toStr(newValue!);
+                        });
                       }
                     }))));
   }
@@ -629,6 +633,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
 
             if (prodInfo.list.length > 0)
               prod.productID = prodInfo.list[0].productID;
+            prod.categoryID = Func.toInt(_selectedCategory);
             prod.prodcutTitle = _ctrProdTitle.text;
             prod.summary = _ctrProdSummary.text;
             prod.productPrice = Func.toDouble(_ctrProdPrice.text);
@@ -767,7 +772,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                         "Бүтээгдэхүүн амжилттай хадгалагдлаа.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: globals.pinkColor,
+                          color: globals.blackColor,
                           fontSize: 15,
                         ),
                       ),
@@ -780,7 +785,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(globals.pinkColor),
+                              MaterialStateProperty.all(globals.yellowColor),
                           padding: MaterialStateProperty.all(EdgeInsets.all(3)),
                         ),
                         child: Text(
@@ -788,7 +793,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: globals.whiteColor,
+                            color: globals.blackColor,
                           ),
                         ),
                         onPressed: () async {
@@ -822,6 +827,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       _ctrContent.text = prodInfo.list[0].content!;
       _ctrSerialNo.text = prodInfo.list[0].serialNo!;
 
+      _selectedCategory = Func.toStr(prodInfo.list[0].categoryID!);
       isImageSelected = true;
       _strImageUrl = prodInfo.list[0].imageUrl!;
       _ctrImageUrl.text = prodInfo.list[0].imageUrl!;

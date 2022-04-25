@@ -1,3 +1,18 @@
+const pgp1 = require('pg-promise')();
+// Database connection details;
+const cn1 = {
+    host: 'localhost', // 'localhost' is the default;
+    port: 5432, // 5432 is the default;
+    database: 'together',
+    user: 'me',
+    password: 'password',
+
+    // to auto-exit on idle, without having to shut-down the pool;
+    // see https://github.com/vitaly-t/pg-promise#library-de-initialization
+    allowExitOnIdle: true
+};
+const db1 = pgp1(cn1); // database instance;
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
@@ -20,7 +35,12 @@ const getProd = (request, response) => {
 const getProdById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM public."Product" WHERE "ProductID"  = $1', [id], (error, results) => {
+  pool.query('SELECT "Product".*, cat.CategoryID '+
+  'FROM "Product" '+
+  '  LEFT JOIN '+
+  '  (SELECT "ProductID", MAX("CategoryID") CategoryID FROM "Product_Category" GROUP BY  "ProductID") as cat '+
+  'ON "Product"."ProductID" = cat."ProductID" '+
+  'WHERE "Product"."ProductID"  = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -33,22 +53,44 @@ const createProd = (request, response) => {
     const { User_ID,	prodcut_title, metaTitle,
       summary,	product_price, discount,
       quantity,	group_qty, status,
-      content,	serial_no, image_url } = request.body
+      content,	serial_no, image_url, CategoryID } = request.body
     
       console.log(request.body) 
+      var prodID
+      db1.one(''+
+      '  INSERT INTO public."Product" ("User_ID",	"prodcut_title", "metaTitle", '+
+      '   "summary",	"product_price", "discount", '+
+      '   "quantity",	"group_qty", "status", '+
+      '   "content",	"serial_no", "image_url", '+
+      '   "current_order_qty","createdAt") '+
+      '  VALUES ($1, $2, $3, ' +
+      '           $4, $5, $6, ' +
+      '           $7, $8, $9, ' +
+      '           $10, $11, $12, 0, current_date)  RETURNING "ProductID"', [User_ID,	prodcut_title, metaTitle,
+        summary,	product_price, discount,
+        quantity,	group_qty, status,
+        content,	serial_no, image_url])
+      .then(data => {
+          console.log('DATA:', data); // print data;
+          if (data === undefined)
+            prodID = 0
+          else
+            prodID = data.ProductID
 
-    pool.query('INSERT INTO public."Product" ("User_ID",	"prodcut_title", "metaTitle","summary",	"product_price", "discount", "quantity",	"group_qty", "status", "content",	"serial_no", "image_url", "current_order_qty","createdAt") VALUES ($1, $2, $3, ' +
-    '           $4, $5, $6, ' +
-    '           $7, $8, $9, ' +
-    '           $10, $11, $12, 0, current_date)', [User_ID,	prodcut_title, metaTitle,
-      summary,	product_price, discount,
-      quantity,	group_qty, status,
-      content,	serial_no, image_url], (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).send() //results.rows[0].ProductId)    
-    })
+          console.log('prodID:', prodID);
+          
+          db1.none('INSERT INTO public."Product_Category" ("ProductID","CategoryID") VALUES ($1, $2)',
+          [prodID, CategoryID])
+          .then(() => {
+            // success;            
+          response.status(200).send() //results.rows[0].ProductId)    
+            })
+          .catch(error => {
+              console.log('ERROR - Product_Category :', error); // print error;
+          }
+          ); 
+      }) 
+    
 } catch (err) {
     console.error(err.message)
 }
@@ -100,7 +142,7 @@ const getProdByCategory = (request, response) => {
 
   pool.query(''+
   'select "Product".* from "Product" '+
-	' inner join "Product_Category" on "Product_Category"."ProductID" = "Product_Category"."ProductID" '+
+	' inner join "Product_Category" on "Product_Category"."ProductID" = "Product"."ProductID" '+
   ' inner join "Category" on "Product_Category"."CategoryID" = "Category"."CategoryID"'+
   'WHERE "Category"."CategoryID" = $1', [id], (error, results) => {
     if (error) {

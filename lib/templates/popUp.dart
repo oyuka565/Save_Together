@@ -78,13 +78,13 @@ void validationErrorPopup(BuildContext context, String msg) {
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return Dialog(
-            backgroundColor: globals.lightPinkColor,
+            backgroundColor: globals.whiteColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
             child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(width: 2, color: Colors.red)),
+                    border: Border.all(width: 2, color: Colors.yellow)),
                 height: 120 + msg.length / 2,
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [

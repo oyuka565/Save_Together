@@ -34,6 +34,16 @@ class Body extends StatelessWidget {
     return ListView(
       children: [
         ProductImages(widget.product),
+        Center(
+          child: Text(
+            "\$${widget.product.discount}",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFFFF4848),
+            ),
+          ),
+        ),
         TopRoundedContainer(
           color: Colors.white,
           child: Column(

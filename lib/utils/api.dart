@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:together_app/model/ProdModel.dart';
 
-import '../model/CategoryResponse.dart';
+import '../model/CategoryModel.dart';
 import '../model/OrderModel.dart';
 import '../model/UserList.dart';
 import 'func.dart';
@@ -71,6 +71,27 @@ class APIService {
     }
     return res;
   }
+
+  Future<ProductListResponse> prodByCategoryList(int catId) async {
+    String url = "/prodbycategory";
+    if (catId != 0) url = url + "/" + catId.toString();
+    ProductListResponse res = new ProductListResponse(list: []);
+
+    try {
+      final response = await http.get(new Uri.http(globals.apiURL, url));
+      //await http.post(Uri.parse(url), headers: headers,body: "");
+      if (response.statusCode == 200) {
+        final jsonResp = jsonDecode(response.body);
+        res = ProductListResponse.fromJson(jsonResp);
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return res;
+  }
+
   /* Бүтээгдэхүүн хадгалах INSERT, UPDATE 2-лаа хийгдэнэ */
   Future<bool> saveProdInfo(ProductModel prod, bool isEdit) async {
     bool result = false;
@@ -108,6 +129,7 @@ class APIService {
           headers: headers,
           body: jsonEncode(<String, String>{
             'ProductId': Func.toStr(prod.productID!),
+            'CategoryID': Func.toStr(prod.categoryID!),
             'User_ID': globals.userId,
             'prodcut_title': prod.prodcutTitle!,
             'metaTitle': prod.prodcutTitle!,
@@ -127,7 +149,7 @@ class APIService {
           new Uri.http(globals.apiURL, urlProd),
           headers: headers,
           body: jsonEncode(<String, String>{
-            'ProductId': Func.toStr(prod.productID!),
+            'CategoryID': Func.toStr(prod.categoryID!),
             'User_ID': globals.userId,
             'prodcut_title': prod.prodcutTitle!,
             'metaTitle': prod.prodcutTitle!,

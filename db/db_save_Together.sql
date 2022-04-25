@@ -23,6 +23,16 @@ CREATE TABLE "Product" (
 ALTER TABLE IF EXISTS public."Product"
     ADD COLUMN "current_order_group_ID" bigint;
 
+ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "image_url" text;
+	
+ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "rating" float;
+	
+ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "current_order_group_ID" bigint;
+
+
 CREATE TABLE "Product_Category" (
   "ProductID" int,
   "CategoryID" int

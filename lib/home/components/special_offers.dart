@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:together_app/home/components/product_list.dart';
 import 'package:together_app/utils/globals.dart' as globals;
 import '../../../size_config.dart';
-import '../../model/CategoryResponse.dart';
+import '../../model/CategoryModel.dart';
 import '../../templates/popUp.dart';
 import '../../utils/Func.dart';
 import '../../utils/api.dart';
@@ -53,7 +54,12 @@ class _SpecialOffers extends State<SpecialOffers> {
                             ? "assets/images/noimageavailable.jpg"
                             : categoryList.list[index].imageUrl!),
                         category: categoryList.list[index].title!,
-                        press: () {},
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProductList(categoryList.list[index].categoryID)),
+                          );
+                        },
                       );
                     }),
               ))
