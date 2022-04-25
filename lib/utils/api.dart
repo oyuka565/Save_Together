@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:together_app/model/CartModel.dart';
 import 'package:together_app/model/ProdModel.dart';
 
 import '../model/CategoryModel.dart';
+import '../model/Cart.dart';
 import '../model/OrderModel.dart';
 import '../model/UserList.dart';
 import 'func.dart';
@@ -51,6 +53,78 @@ class APIService {
     }
     return res;
   }
+
+
+  Future<bool> createCart(CartModel cart, bool isEdit) async {
+    bool result = false;
+    String urlProd = "/addCart";
+    if (isEdit) urlProd = urlProd + "/" + cart.Cart_ID.toString();
+
+    try {
+      var url = Uri.http(globals.apiURL, urlProd);
+
+      var requestMethod = isEdit ? "PUT" : "POST";
+      var request = http.MultipartRequest(requestMethod, url);
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response;
+
+      if (cart.imageUrl !=null){
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath('imageUrl', cart.imageUrl!,);
+        request.files.add(multipartFile);
+      }
+      if (isEdit)
+        response = await http.put(
+          new Uri.http(globals.apiURL, urlProd),
+          headers: headers,
+          body: jsonEncode(<String, String>{
+            'Cart_ID': Func.toStr(cart.Cart_ID!),
+            'User_ID': globals.userId,
+            'status': Func.toStr(cart.status!),
+            'User_Fname': cart.User_Fname!,
+            'User_Lname': cart.User_Lname!,
+            'User_Phone1': Func.toStr(cart.User_Phone1!),
+            'User_Email': Func.toStr(cart.User_Email!),
+            'line1': Func.toStr(cart.line1!),
+            'line2': Func.toStr(cart.line2!),
+            'City': cart.City!,
+            'province': cart.province!,
+            'Country': cart.Country!,
+            'content': Func.toStr(cart.province!),
+            'imageUrl': Func.toStr(cart.Country!)
+          }),
+        );
+      else
+        response = await http.post(
+          new Uri.http(globals.apiURL, urlProd),
+          headers: headers,
+          body: jsonEncode(<String, String>{
+            'Cart_ID': Func.toStr(cart.Cart_ID!),
+            'User_ID': globals.userId,
+            'status': Func.toStr(cart.status!),
+            'User_Fname': cart.User_Fname!,
+            'User_Lname': cart.User_Lname!,
+            'User_Phone1': Func.toStr(cart.User_Phone1!),
+            'User_Email': Func.toStr(cart.User_Email!),
+            'line1': Func.toStr(cart.line1!),
+            'line2': Func.toStr(cart.line2!),
+            'City': cart.City!,
+            'province': cart.province!,
+            'Country': cart.Country!,
+            'content': Func.toStr(cart.province!),
+            'imageUrl': Func.toStr(cart.Country!)
+          }),
+        );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
+
 
   Future<CategoryListResponse> categoryList() async {
     String url = "/category";
@@ -174,6 +248,7 @@ class APIService {
     }
     return result;
   }
+
   /* Хэрэглэгчийн захиалгын жагсаалт авах */
   Future<OrderListResponse> getUserOrder() async {
     String url = "/orders/" + globals.userId;

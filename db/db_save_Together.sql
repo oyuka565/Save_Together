@@ -85,7 +85,8 @@ CREATE TABLE "order_person" (
   "createdAt" timestamp,
   "updatedAt" timestamp,
   "content" text,
-  "image_url" text
+  "image_url" text,
+   "order_group_ID" int
 );
 
 ALTER TABLE IF EXISTS public."order_person"

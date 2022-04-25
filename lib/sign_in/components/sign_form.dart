@@ -7,6 +7,7 @@ import 'package:together_app/login_success/login_success_screen.dart';
 
 import 'package:together_app/utils/globals.dart';
 import '../../../components/default_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SignForm extends StatefulWidget {
@@ -15,6 +16,8 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  final _auth = FirebaseAuth.instance;
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -72,12 +75,22 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: 20),
           DefaultButton(
             text: "Үргэлжлүүлэх",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                try{
+                  final user = await _auth.signInWithEmailAndPassword(email: email!, password: password!);
+                  if (user != null){
+                    print("Success!===============");
+                    // if all are valid then go to success screen
+                    KeyboardUtil.hideKeyboard(context);
+                    Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                  } else {
+                    print("User is not found!");
+                  }
+                } catch (e){
+                  print(e);
+                }
               }
             },
           ),
@@ -93,7 +106,7 @@ class _SignFormState extends State<SignForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         }
         return null;
@@ -102,7 +115,7 @@ class _SignFormState extends State<SignForm> {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }

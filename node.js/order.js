@@ -3,9 +3,9 @@ const pgp = require('pg-promise')();
 const cn = {
     host: 'localhost', // 'localhost' is the default;
     port: 5432, // 5432 is the default;
-    database: 'together',
+    database: 'api',
     user: 'me',
-    password: 'password',
+    password: 'sa',
 
     // to auto-exit on idle, without having to shut-down the pool;
     // see https://github.com/vitaly-t/pg-promise#library-de-initialization

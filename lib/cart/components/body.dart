@@ -3,19 +3,27 @@ import 'package:flutter_svg/svg.dart';
 import 'package:together_app/model/Cart.dart';
 
 import '../../../size_config.dart';
+import '../../model/ProdModel.dart';
+import '../../templates/popUp.dart';
+import '../../utils/api.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {
+
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  final GlobalKey<ScaffoldState> mainDrawerKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: 20),
+      EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: ListView.builder(
         itemCount: demoCarts.length,
         itemBuilder: (context, index) => Padding(
@@ -46,5 +54,23 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+  ProductListResponse prodList = new ProductListResponse(list: []);
+
+  void prodLists() {
+    APIService apiService = new APIService();
+    apiService.prodList(0).then((value) {
+      if (value != null) {
+        try {
+          setState(() {
+            prodList = value;
+          });
+        } catch (e) {
+          print("categoryList aldaa $e");
+        }
+      } else {
+        serverErrorPopup(context, "empty value");
+      }
+    });
   }
 }

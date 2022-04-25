@@ -6,6 +6,9 @@ import 'package:together_app/complete_profile/complete_profile_screen.dart';
 
 import 'package:together_app/utils/globals.dart';
 import '../../../size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../helper/keyboard.dart';
 
 
 class SignUpForm extends StatefulWidget {
@@ -14,6 +17,8 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final _auth = FirebaseAuth.instance;
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -50,12 +55,30 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(80)),
           DefaultButton(
             text: "Үргэлжлүүлэх",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              }
+            press: ()
+              async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  try{
+                    final user = await _auth.createUserWithEmailAndPassword(email: email!, password: password!);
+                    if (user != null){
+                      print("Success!===============");
+                      // if all are valid then go to success screen
+                      KeyboardUtil.hideKeyboard(context);
+                      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                    } else {
+                      print("User is not found!");
+                    }
+                  } catch (e){
+                    print(e);
+                  }
+                }
+
+              // if (_formKey.currentState!.validate()) {
+              //   _formKey.currentState!.save();
+              //   // if all are valid then go to success screen
+              //   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              // }
             },
           ),
         ],

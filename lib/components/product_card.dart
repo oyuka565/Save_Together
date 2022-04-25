@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:together_app/model/Product.dart';
 import 'package:together_app/details/details_screen.dart';
 import 'package:together_app/utils/globals.dart';
 

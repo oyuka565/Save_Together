@@ -17,11 +17,33 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
   host: 'localhost',
-  database: 'together',
-  password: 'password',
+  database: 'api',
+  password: 'sa',
   port: 5432,
 })
 
+const getCart = (request, response) => {
+  console.log(request) 
+  const id = parseInt(request.params.id)
+  pool.query('SELECT * FROM public."Cart" WHERE "Cart_ID"  = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const createCart = (request, response) => {
+  console.log(request) 
+  const id = parseInt(request.params.id)
+
+  pool.query('INSERT INTO public."Cart_item" ( "ID", "ProductID", "Cart_ID", "sku", "price", "discount", "quantity", "active", "createdAt", "updatedAt", "content", "image_url") SELECT 4 AS "ID", "ProductID", 1 as "Cart_ID", "10" as Scu, "product_price" as price, "discount", "quantity", 1 as active, current_date, current_date, "content", "image_url" FROM public."Product" where "ProductID" = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
 
 const getProd = (request, response) => {
   pool.query('SELECT * FROM public."Product" ORDER BY "ProductID" ASC', (error, results) => {
@@ -31,6 +53,7 @@ const getProd = (request, response) => {
     response.status(200).json(results.rows)
   })
 }
+
 
 const getProdById = (request, response) => {
   const id = parseInt(request.params.id)
@@ -209,8 +232,10 @@ const getUsers = (request, response) => {
       response.status(200).send(`User deleted with ID: ${id}`)
     })
   }
+  
 
   module.exports = {
+    createCart,
     getProd,
     getProdById,
     createProd,
