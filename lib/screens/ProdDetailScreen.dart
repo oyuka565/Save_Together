@@ -128,7 +128,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         //back bt
                         backButton(),
@@ -564,37 +564,45 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   }
 
   Widget buildCategoryDropDown() {
-    return new InputDecorator(
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 0.0),
-        )),
-        child: DropdownButtonHideUnderline(
-            child: ButtonTheme(
-                highlightColor: globals.lightGrayColor,
-                buttonColor: globals.lightGrayColor,
-                alignedDropdown: true,
-                child: new DropdownButton(
-                    dropdownColor: globals.lightGrayColor,
-                    value: _selectedCategory,
-                    isExpanded: true,
-                    items: categoryList.list
-                        .map((CategoryModel item) =>
-                            DropdownMenuItem<String>(
-                                child: Text(item.title!),
-                                value: Func.toStr(item.categoryID!)))
-                        .toList(),
-                    onChanged: (newValue) {
-                      if (mounted) {
-                        if (categoryList.list.length == 0)
-                          setState(() {
-                          _selectedCategory = "";});
-                        else
-                          setState(() {
-                          _selectedCategory = Func.toStr(newValue!);
-                        });
-                      }
-                    }))));
+    return Container(
+      height: 60,
+      padding: EdgeInsets.only(left: 20, right: 5, top: 0, bottom: 0),
+      width: MediaQuery.of(context).size.width - 60,
+      child: InputDecorator(
+          decoration: const InputDecoration(
+              fillColor: globals.lightGrayColor,
+              filled: true,
+              labelText: 'Категори',
+              border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+          )),
+          child: DropdownButtonHideUnderline(
+              child: ButtonTheme(
+                  highlightColor: globals.lightGrayColor,
+                  buttonColor: globals.lightGrayColor,
+                  alignedDropdown: true,
+                  child: new DropdownButton(
+                      dropdownColor: globals.lightGrayColor,
+                      value: _selectedCategory,
+                      isExpanded: true,
+                      items: categoryList.list
+                          .map((CategoryModel item) =>
+                              DropdownMenuItem<String>(
+                                  child: Text(item.title!),
+                                  value: Func.toStr(item.categoryID!)))
+                          .toList(),
+                      onChanged: (newValue) {
+                        if (mounted) {
+                          if (categoryList.list.length == 0)
+                            setState(() {
+                            _selectedCategory = "";});
+                          else
+                            setState(() {
+                            _selectedCategory = Func.toStr(newValue!);
+                          });
+                        }
+                      })))),
+    );
   }
 
   Widget saveButton() {

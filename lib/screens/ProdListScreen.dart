@@ -184,15 +184,15 @@ class _ProdListScreen extends State<ProdListScreen> {
   Widget insertProdButton() {
     return Center(
         child: Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: 0),
       width: MediaQuery.of(context).size.width * 0.8,
       child: ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(globals.yellowColor),
-            padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+            padding: MaterialStateProperty.all(EdgeInsets.only(left:5,top:0,right:5, bottom:0)),
           ),
           child: Text(
-            'Нэмэх',
+            'Бүтээгдэхүү нэмэх',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,

@@ -59,7 +59,7 @@ class _ProductCard extends State<ProductCard> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Hero(
-                    tag: widget._prod.prodcutTitle.toString(),
+                    tag: widget._prod.productID.toString(),
                     child:
                     Image.file(
                       File(widget._prod.imageUrl!),
