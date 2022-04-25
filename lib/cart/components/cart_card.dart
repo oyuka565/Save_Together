@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:together_app/model/Cart.dart';
 import 'package:together_app/utils/globals.dart';
-
+import '../../model/ProdModel.dart';
+import 'package:together_app/model/Cart.dart';
 
 class CartCard extends StatelessWidget {
   const CartCard({
@@ -47,7 +47,10 @@ class CartCard extends StatelessWidget {
                 children: [
                   TextSpan(
                       text: " x${cart.numOfItem}",
-                      style: Theme.of(context).textTheme.bodyText1),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1),
                 ],
               ),
             )
@@ -56,4 +59,6 @@ class CartCard extends StatelessWidget {
       ],
     );
   }
+
+
 }

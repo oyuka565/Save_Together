@@ -4,6 +4,7 @@ import 'package:together_app/model/OrderModel.dart';
 import 'package:together_app/model/Product.dart';
 import 'package:together_app/size_config.dart';
 import 'package:together_app/templates/popUp.dart';
+import '../../model/Cart.dart';
 import '../../utils/api.dart';
 import '../../utils/globals.dart';
 import '../../model/ProdModel.dart';
@@ -139,5 +140,7 @@ class Body extends StatelessWidget {
     });
   }
 
-  void addToCart() {}
+  void addToCart() {
+
+  }
 }

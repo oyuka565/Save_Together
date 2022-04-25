@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/model/ProdModel.dart';
 
-import 'package:together_app/model/Product.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
