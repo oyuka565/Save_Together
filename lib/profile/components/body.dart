@@ -3,6 +3,7 @@ import 'package:together_app/screens/OrderScreen.dart';
 
 import '../../screens/ProdDetailScreen.dart';
 import '../../screens/ProdListScreen.dart';
+import '../../splash/splash_screen.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -56,7 +57,10 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Гарах",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SplashScreen()),
+            );},
           ),
         ],
       ),
