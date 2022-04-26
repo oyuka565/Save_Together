@@ -19,8 +19,9 @@ app.get('/', (request, response) => {
 app.get('/cart/:id', db.getCart)
 app.get('/cart', db.getCarts)
 app.post('/addCart', db.createCart)
+app.post('/getTotalAmt', db.getTotalAmt)
 app.delete('/cart/:id', db.deleteCart)
-
+app.get('/getTotalAmt', db.getTotalAmt)
 app.get('/prods', db.getProd)
 app.get('/prods/:id', db.getProdById)
 app.post('/saveProd', db.createProd)

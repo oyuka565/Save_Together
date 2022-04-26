@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:together_app/components/default_button.dart';
+import '../../utils/api.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  void initState() {
+
+  }
 
   @override
   Widget build(BuildContext context) {

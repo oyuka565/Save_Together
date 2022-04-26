@@ -17,8 +17,8 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
   host: 'localhost',
-  database: 'together',
-  password: 'password',
+  database: 'api',
+  password: 'sa',
   port: 5432,
 })
 
@@ -67,6 +67,7 @@ const createCart = (request, response) => {
 }
 
 const deleteCart = (request, response) => {
+  console.log(request) 
   const id = parseInt(request.params.id)
 
   pool.query('DELETE FROM "Cart_item" WHERE "ID" = $1', [id], (error, results) => {
@@ -186,6 +187,15 @@ const updateProd = (request, response) => {
 
 const getCategory = (request, response) => {
   pool.query('SELECT * FROM public."Category"', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getTotalAmt = (request, response) => {
+  pool.query('SELECT sum("price") FROM public."Cart_item"', (error, results) => {
     if (error) {
       throw error
     }
@@ -313,4 +323,5 @@ const getUsers = (request, response) => {
     createUser,
     updateUser,
     deleteUser,
+    getTotalAmt,
   }

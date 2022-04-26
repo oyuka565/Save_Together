@@ -49,11 +49,11 @@ class Body extends StatelessWidget {
               );
             },
           ),
-          ProfileMenu(
-            text: "Тохиргоо",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
+          // ProfileMenu(
+          //   text: "Тохиргоо",
+          //   icon: "assets/icons/Settings.svg",
+          //   press: () {},
+          // ),
           ProfileMenu(
             text: "Гарах",
             icon: "assets/icons/Log out.svg",

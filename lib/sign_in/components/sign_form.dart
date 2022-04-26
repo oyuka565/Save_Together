@@ -61,14 +61,14 @@ class _SignFormState extends State<SignForm> {
               ),
               Text("Сануулах"),
               Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
-                child: Text(
-                  "Нууц үгээ мартсан",
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              )
+              // GestureDetector(
+              //   onTap: () => Navigator.pushNamed(
+              //       context, ForgotPasswordScreen.routeName),
+              //   child: Text(
+              //     "Нууц үгээ мартсан",
+              //     style: TextStyle(decoration: TextDecoration.underline),
+              //   ),
+              // )
             ],
           ),
           FormError(errors: errors),
