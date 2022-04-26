@@ -34,10 +34,10 @@ const getCart = (request, response) => {
 }
 
 const createCart = (request, response) => {
-  console.log(request) 
-  const id = parseInt(request.params.id)
+  console.log(request.body) 
+  const {ProductID} = request.body
 
-  pool.query('INSERT INTO public."Cart_item" ( "ID", "ProductID", "Cart_ID", "sku", "price", "discount", "quantity", "active", "createdAt", "updatedAt", "content", "image_url") SELECT 4 AS "ID", "ProductID", 1 as "Cart_ID", "10" as Scu, "product_price" as price, "discount", "quantity", 1 as active, current_date, current_date, "content", "image_url" FROM public."Product" where "ProductID" = $1', [id], (error, results) => {
+  pool.query('INSERT INTO public."Cart_item" ( "ID", "ProductID", "Cart_ID", "sku", "price", "discount", "quantity", "active", "createdAt", "updatedAt", "content", "image_url") SELECT 4 AS "ID", "ProductID", 1 as "Cart_ID", "content" as Scu, "product_price" as price, "discount", "quantity", 1 as active, current_date, current_date, "content", "image_url" FROM public."Product" where "ProductID" = $1', [ProductID], (error, results) => {
     if (error) {
       throw error
     }
@@ -46,6 +46,7 @@ const createCart = (request, response) => {
 }
 
 const getProd = (request, response) => {
+  console.log(request.body) 
   pool.query('SELECT * FROM public."Product" ORDER BY "ProductID" ASC', (error, results) => {
     if (error) {
       throw error

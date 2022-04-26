@@ -151,6 +151,19 @@ class Body extends StatelessWidget {
   }
 
   void addToCart() {
-
+    OrderModel order = new OrderModel();
+    order.productID =widget.product.productID;
+    APIService apiService = new APIService();
+    apiService.addToCart(order).then((value) {
+      if (value != null && value == true) {
+        try {
+          informationPopup(context, "Захиалга", "Амжилттай захиалгдлаа.");
+        } catch (e) {
+          print("categoryList aldaa $e");
+        }
+      } else {
+        serverErrorPopup(context, "empty value");
+      }
+    });
   }
 }
