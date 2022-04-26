@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:together_app/model/CartModel.dart';
 import 'package:together_app/model/ProdModel.dart';
 
+import '../model/CartItemModel.dart';
 import '../model/CategoryModel.dart';
 import '../model/Cart.dart';
 import '../model/GroupUsersModel.dart';
@@ -402,6 +403,26 @@ class APIService {
     return result;
   }
 
+
+  Future<CartItemListResponse> cartItemList(int id) async {
+    String url = "/cart";
+    if (id != 0) url = url + "/" + id.toString();
+    CartItemListResponse res = new CartItemListResponse(list: []);
+
+    try {
+      final response = await http.get(new Uri.http(globals.apiURL, url));
+      //await http.post(Uri.parse(url), headers: headers,body: "");
+      if (response.statusCode == 200) {
+        final jsonResp = jsonDecode(response.body);
+        res = CartItemListResponse.fromJson(jsonResp);
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return res;
+  }
   Future<bool> addToCart(OrderModel model) async {
     bool result = false;
     String urlOrder = "/addCart";

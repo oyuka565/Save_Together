@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 
 import '../components/coustom_bottom_nav_bar.dart';
 import '../enums.dart';
+import '../home/components/hamtdaaBar.dart';
 import '../model/UserList.dart';
 import '../templates/AppMenu.dart';
 import '../utils/api.dart';
@@ -47,7 +48,7 @@ class _ProdGroupScreen extends State<ProdGroupScreen> {
   }
 
   //late ProductListResponse prodList;
-  ProdGroupResponse  prodList = new ProdGroupResponse(list: []);
+  ProdGroupResponse prodList = new ProdGroupResponse(list: []);
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,7 @@ class _ProdGroupScreen extends State<ProdGroupScreen> {
                 children: [
                   //AppBar
                   //orderAppBar.draw(context, mainDrawerKey),
+                  HamtdaaBar(),
                   SizedBox(
                     height: 10,
                   ),
@@ -97,31 +99,36 @@ class _ProdGroupScreen extends State<ProdGroupScreen> {
           itemCount: (prodList.list.length),
           itemBuilder: (BuildContext, index) {
             if (index == 0) {
-              return Center(
+              return Container(
+                width: MediaQuery.of(context).size.width -30,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: globals.lightGrayColor,
+                    borderRadius: BorderRadius.circular(6)),
                 child: Row(
                   children: [
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Text("Захиалгын дугаар",
+                    Expanded(
+                      child: Text(
+                        "Захиалгын дугаар",
                         textAlign: TextAlign.left,
                         softWrap: true,
                         style: TextStyle(
-                            fontSize: 20,
-                            color: globals.blackColor,
+                            fontSize: 16,
+                            color: globals.yellowColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Text("Захиалгын тоо",
+                    Expanded(
+                      child: Text(
+                        "Захиалгын тоо",
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontSize: 20,
-                            color: globals.blackColor,
+                            fontSize: 16,
+                            color: globals.yellowColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -133,42 +140,44 @@ class _ProdGroupScreen extends State<ProdGroupScreen> {
             return Row(
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GroupUsersScreen(
-                                  Func.toInt(prodList.list[index].orderGroupID!))),
-                        );
-                        //Navigator.of(context)
-                        //    .push(_orderDetailsScreenRoute());
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Text( "№:" +
-                          Func.toStr(prodList.list[index].orderGroupID!),
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: globals.blueColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GroupUsersScreen(
+                              Func.toInt(prodList.list[index].orderGroupID!))),
+                    );
+                    //Navigator.of(context)
+                    //    .push(_orderDetailsScreenRoute());
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    padding: EdgeInsets.only(left: 20),
+                    child:
+                    Text(
+                      "№:" + Func.toStr(prodList.list[index].orderGroupID!),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                          color: globals.blackColor ),
                     ),
+                  ),
+                ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.4,
-                  child: Text( "Захиалгын тоо: " +
-                    Func.toStr(prodList.list[index].orderQuantity!),
+                  child: Text(
+                    "Захиалгын тоо: " +
+                        Func.toStr(prodList.list[index].orderQuantity!),
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontSize: 16,
-                        color: globals.blueColor,
-                        fontWeight: FontWeight.bold),
+                        color: globals.blackColor, ),
                   ),
                 ),
               ],
@@ -176,6 +185,7 @@ class _ProdGroupScreen extends State<ProdGroupScreen> {
           }),
     );
   }
+
   readProdData() {
     try {
       setState(() {

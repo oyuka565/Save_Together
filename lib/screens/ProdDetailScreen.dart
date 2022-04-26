@@ -186,18 +186,13 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                 ),
               ),
             ),
-            Center(
-              child: Row(children: [
-                SizedBox(
-                  width: 5, height: 50,
-                ),
-                saveButton(),
-                SizedBox(
-                  width: 5,
-                ),
-                groupDetailButton(),
-              ]),
-            ),
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  saveButton(),
+                  groupDetailButton(),
+                ]),
           ]),
         ),
       ),
@@ -623,26 +618,26 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
         width: MediaQuery.of(context).size.width * 0.5,
         padding: EdgeInsets.symmetric(vertical: 15),
         child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(globals.yellowColor),
-          padding: MaterialStateProperty.all(
-              EdgeInsets.only(left: 1, top: 0, right: 1, bottom: 0)),
-        ),
-        child: Text(
-          'ЗАХИАЛГЫН МЭДЭЭЛЭЛ',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: globals.whiteColor,
-          ),
-        ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProdGroupScreen(widget._prodId)),
-          );
-        }),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(globals.yellowColor),
+              padding: MaterialStateProperty.all(
+                  EdgeInsets.only(left: 1, top: 0, right: 1, bottom: 0)),
+            ),
+            child: Text(
+              'ЗАХИАЛГЫН МЭДЭЭЛЭЛ',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: globals.whiteColor,
+              ),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProdGroupScreen(widget._prodId)),
+              );
+            }),
       ),
     );
   }

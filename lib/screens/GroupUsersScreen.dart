@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 
 import '../components/coustom_bottom_nav_bar.dart';
 import '../enums.dart';
+import '../home/components/hamtdaaBar.dart';
 import '../model/UserList.dart';
 import '../templates/AppMenu.dart';
 import '../utils/api.dart';
@@ -67,10 +68,7 @@ class _GroupUsersScreen extends State<GroupUsersScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Text(
-                    "Захиалсан хэрэглэгч",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  HamtdaaBar(),
                   //AppBar
                   //orderAppBar.draw(context, mainDrawerKey),
                   SizedBox(
@@ -96,31 +94,35 @@ class _GroupUsersScreen extends State<GroupUsersScreen> {
           itemCount: (prodList.list.length),
           itemBuilder: (BuildContext, index) {
             if (index == 0) {
-              return Center(
+              return Container(
+                width: MediaQuery.of(context).size.width - 30,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: globals.lightGrayColor,
+                    borderRadius: BorderRadius.circular(6)),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: Row(
                   children: [
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.3,
+                    Expanded(
                       child: Text("Хэрэглэгч",
                         textAlign: TextAlign.left,
                         softWrap: true,
                         style: TextStyle(
-                            fontSize: 20,
-                            color: globals.blackColor,
+                            fontSize: 16,
+                            color: globals.yellowColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
+                    Expanded(
                       child: Text("Захиалгын огноо",
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontSize: 20,
-                            color: globals.blackColor,
+                            fontSize: 16,
+                            color: globals.yellowColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -131,8 +133,8 @@ class _GroupUsersScreen extends State<GroupUsersScreen> {
             index -= 1;
             return Row(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
+                SizedBox(height: 25,),
+                Expanded(
                   child: Text(
                     Func.toStr(prodList.list[index].userID!),
                     textAlign: TextAlign.left,
@@ -142,8 +144,7 @@ class _GroupUsersScreen extends State<GroupUsersScreen> {
                         color: globals.grayColor),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.4,
+                Expanded(
                   child: Text(
                     Func.toDateStr(prodList.list[index].createdAt!),
                     textAlign: TextAlign.left,

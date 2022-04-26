@@ -33,15 +33,47 @@ const getCart = (request, response) => {
   })
 }
 
-const createCart = (request, response) => {
-  console.log(request.body) 
-  const {ProductID} = request.body
 
-  pool.query('INSERT INTO public."Cart_item" ( "ID", "ProductID", "Cart_ID", "sku", "price", "discount", "quantity", "active", "createdAt", "updatedAt", "content", "image_url") SELECT 4 AS "ID", "ProductID", 1 as "Cart_ID", "content" as Scu, "product_price" as price, "discount", "quantity", 1 as active, current_date, current_date, "content", "image_url" FROM public."Product" where "ProductID" = $1', [ProductID], (error, results) => {
+const getCarts = (request, response) => {
+  console.log(request.body) 
+  pool.query('SELECT * FROM public."Cart_item" ORDER BY "ID" ASC', (error, results) => {
     if (error) {
       throw error
     }
     response.status(200).json(results.rows)
+  })
+}
+
+const createCart = (request, response) => {
+  console.log(request.body) 
+  const {ProductID} = request.body
+
+  pool.query('INSERT INTO "Cart_item" '+
+  ' ( "ProductID", "Cart_ID", '+
+  '   "sku", "price", "discount", '+
+  '   "quantity", "active", "createdAt", '+ 
+  '   "updatedAt", "content", "image_url" '+
+  '  ) '+
+  ' SELECT "ProductID", 1 as "Cart_ID",'+
+  '   "content" as Sku, "product_price" as price, "discount", '+
+  '   "quantity", 1 as active, current_date, '+
+  '   current_date, "content", "image_url" '+
+  ' FROM "Product" where "ProductID" = $1', [ProductID], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const deleteCart = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query('DELETE FROM "Cart_item" WHERE "ID" = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`Cart deleted with ID: ${id}`)
   })
 }
 
@@ -264,7 +296,10 @@ const getUsers = (request, response) => {
   }
 
   module.exports = {
+    getCart,
+    getCarts,
     createCart,
+    deleteCart,
     getGroupUsers,
     getProdGroups,
     getProd,

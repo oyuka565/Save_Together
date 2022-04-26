@@ -5,6 +5,7 @@ import 'package:together_app/home/home_screen.dart';
 import 'package:together_app/screens/ProdListScreen.dart';
 import 'package:together_app/utils/globals.dart';
 
+import '../cart/cart_screen.dart';
 import '../enums.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -55,7 +56,8 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/shopping-cart.svg"),
-                onPressed: () {},
+                onPressed: () =>
+                    Navigator.pushNamed(context, CartScreen.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset(

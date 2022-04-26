@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:together_app/model/Cart.dart';
 
 import '../../../size_config.dart';
+import '../../model/CartItemModel.dart';
 import '../../model/ProdModel.dart';
 import '../../templates/popUp.dart';
 import '../../utils/api.dart';
@@ -18,22 +19,28 @@ class _BodyState extends State<Body> {
   final GlobalKey<ScaffoldState> mainDrawerKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    super.initState();
 
+    readCartList();
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:
       EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: ListView.builder(
-        itemCount: demoCarts.length,
+        itemCount: (cartList.list.isEmpty? 0: cartList.list.length),
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(demoCarts[index].product.id.toString()),
+            key: Key(cartList.list[index].iD.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {
-                demoCarts.removeAt(index);
+                cartList.list.removeAt(index);
               });
             },
             background: Container(
@@ -49,24 +56,24 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            child: CartCard(cart: demoCarts[index]),
+            child: CartCard(cart: cartList.list[index]),
           ),
         ),
       ),
     );
   }
-  ProductListResponse prodList = new ProductListResponse(list: []);
+  CartItemListResponse cartList = new CartItemListResponse(list: []);
 
-  void prodLists() {
+  readCartList() {
     APIService apiService = new APIService();
-    apiService.prodList(0).then((value) {
+    apiService.cartItemList(0).then((value) {
       if (value != null) {
         try {
           setState(() {
-            prodList = value;
+            cartList = value;
           });
         } catch (e) {
-          print("categoryList aldaa $e");
+          print("cart list deer aldaa $e");
         }
       } else {
         serverErrorPopup(context, "empty value");

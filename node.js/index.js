@@ -16,7 +16,10 @@ app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.get('/addCart', db.createCart)
+app.get('/cart/:id', db.getCart)
+app.get('/cart', db.getCarts)
+app.post('/addCart', db.createCart)
+app.delete('/cart/:id', db.deleteCart)
 
 app.get('/prods', db.getProd)
 app.get('/prods/:id', db.getProdById)
