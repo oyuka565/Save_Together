@@ -3,9 +3,9 @@ const pgp = require('pg-promise')();
 const cn = {
     host: 'localhost', // 'localhost' is the default;
     port: 5432, // 5432 is the default;
-    database: 'api',
+    database: 'together',
     user: 'me',
-    password: 'sa',
+    password: 'password',
 
     // to auto-exit on idle, without having to shut-down the pool;
     // see https://github.com/vitaly-t/pg-promise#library-de-initialization
@@ -67,26 +67,25 @@ const getUserOrders = (request, response) => {
       // Хэрэв захиалгын багц дүүрсэн бол 0, дүүрээгүй бол БАГЦЫН ДУГААР буцаана
       var groupID = 0
  
-      db.any('SELECT CASE WHEN "order_group"."order_quantity" + 1 < "Product"."group_qty" THEN "Product"."current_order_group_ID" '+
-      '        ELSE 0 END groupid '+
+      db.any('SELECT MAX(CASE WHEN "order_group"."order_quantity" < "Product"."group_qty" THEN "Product"."current_order_group_ID" '+
+      ' ELSE 0 END) groupid '+
       'FROM "order_group" '+
       '	inner join "Product" on '+
       '		"order_group"."order_group_ID" = "Product"."current_order_group_ID" '+
       'WHERE "Product"."ProductID" = $1', [ProductID])
       .then(data => {
           console.log('DATA:', data); // print data;
-          if (data === undefined)
+          if (data === undefined || data[0].groupid  === undefined)
             groupID = 0
           else
             groupID = data[0].groupid
-          console.log('groupID:', groupID);
-  
+          console.log('groupID:',  groupID); 
         // Хэрэв захиалга дүүрсан бол
-        if (groupID == '0') {
+        if (data[0].groupid == '0') {
           console.log('Захиалга дүүрсэн') 
           // Групп захиалга руу бичилт нэмнэ
-          db.one('INSERT INTO "order_group" ("ProductID", "order_quantity") VALUES ($1,$2) RETURNING "order_group_ID"'
-            , [ProductID, quantity])
+          db.one('INSERT INTO "order_group" ("ProductID", "order_quantity") VALUES ($1,0) RETURNING "order_group_ID"'
+            , [ProductID])
             .then(data => {
               console.log(data.order_group_ID); // print new user id;
               groupID = data.order_group_ID

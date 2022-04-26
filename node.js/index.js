@@ -22,7 +22,8 @@ app.post('/saveProd', db.createProd)
 app.put('/saveProd/:id', db.updateProd)
 app.get('/category', db.getCategory)
 app.get('/prodbycategory/:id', db.getProdByCategory)
-
+app.get('/groupUsers/:id', db.getGroupUsers)
+app.get('/prodGroups/:id', db.getProdGroups)
 
 app.get('/orders/:id', dbOrder.getUserOrders)
 app.get('/order/:id', dbOrder.getOrderId)

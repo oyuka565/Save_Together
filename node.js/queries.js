@@ -17,8 +17,8 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
   host: 'localhost',
-  database: 'api',
-  password: 'sa',
+  database: 'together',
+  password: 'password',
   port: 5432,
 })
 
@@ -54,7 +54,6 @@ const getProd = (request, response) => {
   })
 }
 
-
 const getProdById = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -80,6 +79,7 @@ const createProd = (request, response) => {
     
       console.log(request.body) 
       var prodID
+      
       db1.one(''+
       '  INSERT INTO public."Product" ("User_ID",	"prodcut_title", "metaTitle", '+
       '   "summary",	"product_price", "discount", '+
@@ -104,9 +104,9 @@ const createProd = (request, response) => {
           
           db1.none('INSERT INTO public."Product_Category" ("ProductID","CategoryID") VALUES ($1, $2)',
           [prodID, CategoryID])
-          .then(() => {
-            // success;            
-          response.status(200).send() //results.rows[0].ProductId)    
+          .then(() => { 
+              // success;            
+            response.status(200).send() //results.rows[0].ProductId)    
             })
           .catch(error => {
               console.log('ERROR - Product_Category :', error); // print error;
@@ -174,6 +174,35 @@ const getProdByCategory = (request, response) => {
     response.status(200).json(results.rows)
   })
 }
+/*Багцын жагсаалт */
+const getProdGroups = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query(''+
+  ' select "order_group".* from "order_group" '+
+  'inner join "Product" on "Product"."ProductID" = "order_group"."ProductID"  '+
+  'where "order_group"."ProductID" = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+/*Багцад байгаа харилцагч */
+const getGroupUsers = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query(''+
+  ' select "order_person".* from "order_group" '+
+  ' inner join "order_person" on "order_person"."order_group_ID" = "order_group"."order_group_ID"  '+
+  ' where "order_group"."order_group_ID"  = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
 
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
@@ -232,10 +261,11 @@ const getUsers = (request, response) => {
       response.status(200).send(`User deleted with ID: ${id}`)
     })
   }
-  
 
   module.exports = {
     createCart,
+    getGroupUsers,
+    getProdGroups,
     getProd,
     getProdById,
     createProd,
