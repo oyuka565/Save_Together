@@ -37,7 +37,7 @@ const createCart = (request, response) => {
   console.log(request.body) 
   const {ProductID} = request.body
 
-  pool.query('INSERT INTO public."Cart_item" ( "ID", "ProductID", "Cart_ID", "sku", "price", "discount", "quantity", "active", "createdAt", "updatedAt", "content", "image_url") SELECT 4 AS "ID", "ProductID", 1 as "Cart_ID", "content" as Scu, "product_price" as price, "discount", "quantity", 1 as active, current_date, current_date, "content", "image_url" FROM public."Product" where "ProductID" = $1', [ProductID], (error, results) => {
+  pool.query('INSERT INTO public."Cart_item" ("ProductID", "Cart_ID", "sku", "price", "discount", "quantity", "active", "createdAt", "updatedAt", "content", "image_url") SELECT "ProductID", 1 as "Cart_ID", "content" as Scu, "product_price" as price, "discount", "quantity", 1 as active, current_date, current_date, "content", "image_url" FROM public."Product" where "ProductID" = $1', [ProductID], (error, results) => {
     if (error) {
       throw error
     }

@@ -157,7 +157,7 @@ class Body extends StatelessWidget {
     apiService.addToCart(order).then((value) {
       if (value != null && value == true) {
         try {
-          informationPopup(context, "Захиалга", "Амжилттай захиалгдлаа.");
+          informationPopup(context, "Сагс", "Амжилттай нэмэгдлээ.");
         } catch (e) {
           print("categoryList aldaa $e");
         }
