@@ -77,7 +77,7 @@ class _OrderScreen extends State<OrderScreen> {
                     height: 10,
                   ),
                   buildOrderList(),
-                  insertOrderButton(),
+                 // insertOrderButton(),
                 ],
               ),
             ),
@@ -128,7 +128,7 @@ class _OrderScreen extends State<OrderScreen> {
 
   buildOrderList() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.9 - 130,
+      height: MediaQuery.of(context).size.height * 0.9 - 80,
       width: MediaQuery.of(context).size.width * 0.9,
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       child: ListView.builder(

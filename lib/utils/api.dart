@@ -7,7 +7,9 @@ import 'package:together_app/model/ProdModel.dart';
 
 import '../model/CategoryModel.dart';
 import '../model/Cart.dart';
+import '../model/GroupUsersModel.dart';
 import '../model/OrderModel.dart';
+import '../model/ProdGroupModel.dart';
 import '../model/UserList.dart';
 import 'func.dart';
 import 'package:together_app/utils/globals.dart' as globals;
@@ -157,6 +159,45 @@ class APIService {
       if (response.statusCode == 200) {
         final jsonResp = jsonDecode(response.body);
         res = ProductListResponse.fromJson(jsonResp);
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return res;
+  }
+
+
+  Future<ProdGroupResponse> prodGroupList(int prodId) async {
+    String url = "/prodGroups";
+    if (prodId != 0) url = url + "/" + prodId.toString();
+    ProdGroupResponse res = new ProdGroupResponse(list: []);
+
+    try {
+      final response = await http.get(new Uri.http(globals.apiURL, url));
+      if (response.statusCode == 200) {
+        final jsonResp = jsonDecode(response.body);
+        res = ProdGroupResponse.fromJson(jsonResp);
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return res;
+  }
+
+  Future<GroupUsersResponse> GroupUsersList(int grpId) async {
+    String url = "/groupUsers";
+    if (grpId != 0) url = url + "/" + grpId.toString();
+    GroupUsersResponse res = new GroupUsersResponse(list: []);
+
+    try {
+      final response = await http.get(new Uri.http(globals.apiURL, url));
+      if (response.statusCode == 200) {
+        final jsonResp = jsonDecode(response.body);
+        res = GroupUsersResponse.fromJson(jsonResp);
       }
     } catch (e) {
       print(e.toString());

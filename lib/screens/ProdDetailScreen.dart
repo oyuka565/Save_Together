@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:together_app/model/ProdModel.dart';
+import 'package:together_app/screens/ProdGroupScreen.dart';
 import 'package:together_app/screens/ProdListScreen.dart';
 import 'package:together_app/templates/popUp.dart';
 import 'package:together_app/utils/Func.dart';
@@ -185,7 +186,18 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                 ),
               ),
             ),
-            saveButton(),
+            Center(
+              child: Row(children: [
+                SizedBox(
+                  width: 5, height: 50,
+                ),
+                saveButton(),
+                SizedBox(
+                  width: 5,
+                ),
+                groupDetailButton(),
+              ]),
+            ),
           ]),
         ),
       ),
@@ -574,8 +586,8 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
               filled: true,
               labelText: 'Категори',
               border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey, width: 0.0),
-          )),
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              )),
           child: DropdownButtonHideUnderline(
               child: ButtonTheme(
                   highlightColor: globals.lightGrayColor,
@@ -586,22 +598,52 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                       value: _selectedCategory,
                       isExpanded: true,
                       items: categoryList.list
-                          .map((CategoryModel item) =>
-                              DropdownMenuItem<String>(
-                                  child: Text(item.title!),
-                                  value: Func.toStr(item.categoryID!)))
+                          .map((CategoryModel item) => DropdownMenuItem<String>(
+                              child: Text(item.title!),
+                              value: Func.toStr(item.categoryID!)))
                           .toList(),
                       onChanged: (newValue) {
                         if (mounted) {
                           if (categoryList.list.length == 0)
                             setState(() {
-                            _selectedCategory = "";});
+                              _selectedCategory = "";
+                            });
                           else
                             setState(() {
-                            _selectedCategory = Func.toStr(newValue!);
-                          });
+                              _selectedCategory = Func.toStr(newValue!);
+                            });
                         }
                       })))),
+    );
+  }
+
+  Widget groupDetailButton() {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.5,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(globals.yellowColor),
+          padding: MaterialStateProperty.all(
+              EdgeInsets.only(left: 1, top: 0, right: 1, bottom: 0)),
+        ),
+        child: Text(
+          'ЗАХИАЛГЫН МЭДЭЭЛЭЛ',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: globals.whiteColor,
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProdGroupScreen(widget._prodId)),
+          );
+        }),
+      ),
     );
   }
 
@@ -609,7 +651,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     return Center(
         child: Container(
       padding: EdgeInsets.symmetric(vertical: 15),
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery.of(context).size.width * 0.4,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(globals.yellowColor),
