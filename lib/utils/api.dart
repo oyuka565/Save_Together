@@ -360,4 +360,32 @@ class APIService {
     }
     return result;
   }
+
+  Future<bool> addToCart(OrderModel model) async {
+    bool result = false;
+    String urlOrder = "/addCart";
+
+    try {
+      var url = Uri.http(globals.apiURL, urlOrder);
+
+      var request = http.MultipartRequest("POST", url);
+
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.post(
+        new Uri.http(globals.apiURL, urlOrder),
+        headers: headers,
+        body: jsonEncode(<String, String>{
+          'ProductID': Func.toStr(model.productID!)
+        }),
+      );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
 }

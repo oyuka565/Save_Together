@@ -192,7 +192,7 @@ class _ProdListScreen extends State<ProdListScreen> {
             padding: MaterialStateProperty.all(EdgeInsets.only(left:5,top:0,right:5, bottom:0)),
           ),
           child: Text(
-            'Бүтээгдэхүү нэмэх',
+            'Бүтээгдэхүүн нэмэх',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
