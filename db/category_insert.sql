@@ -3,7 +3,7 @@ INSERT INTO public."Category"(
 	VALUES ('10', null, 'Хувцас', '', 'Хувцас', 'Хувцас', 'assets/images/tshirt.png');	
 INSERT INTO public."Category"(
 	"CategoryID", "parentID", title, "metaTitle", slug, content, image_url)
-	VALUES ('11', null, 'Технологи', '', 'Технологи', 'Технологи', 'assets/images/tech.png');	
+	VALUES ('11', null, 'Технологи', '', 'Технологи', 'Технологи', 'assets/images/tech.png');
 INSERT INTO public."Category"(
 	"CategoryID", "parentID", title, "metaTitle", slug, content, image_url)
 	VALUES ('12', null, 'Гэр ахуй', '', 'Гэр ахуй', 'Гэр ахуй', 'assets/images/ger_ahui.png');

@@ -4,11 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:together_app/components/product_card.dart';
-import 'package:together_app/model/Product.dart';
-
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../../../size_config.dart';
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../../details/details_screen.dart';
 import '../../enums.dart';
