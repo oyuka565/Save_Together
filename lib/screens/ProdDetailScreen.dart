@@ -44,6 +44,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   final TextEditingController _ctrContent = TextEditingController();
   final TextEditingController _ctrSerialNo = TextEditingController();
   final TextEditingController _ctrImageUrl = TextEditingController();
+  final TextEditingController _ctrImageUrl1 = TextEditingController();
 
   String _selectedCategory = "";
   bool isImageSelected = false;
@@ -59,6 +60,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   final String _strContent = "";
   final String _strSerialNo = "";
   String _strImageUrl = "";
+  String _strImageUrl1 = "";
 
   String _errorMessage = "";
   bool validationPassed = true;
@@ -129,45 +131,45 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         //back bt
                         backButton(),
                         buildCategoryDropDown(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildProdTitle(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildProdSummary(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildProdPrice(),
                         SizedBox(
-                          height: 5,
+                          height: 13
                         ),
                         buildDiscount(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildQuantity(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildGroupQty(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildContent(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         buildSerialNo(),
                         SizedBox(
-                          height: 5,
+                          height: 13,
                         ),
                         //buildImageUrl(),
 
@@ -177,6 +179,15 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                           _ctrImageUrl.text = file.path;
                           isImageSelected = true;
                         }),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        buildImageUrlPicker1(isImageSelected, _strImageUrl1,
+                                (file) {
+                              _strImageUrl1 = file.path;
+                              _ctrImageUrl1.text = file.path;
+                              isImageSelected = true;
+                            }),
                         SizedBox(
                           height: 20,
                         ),
@@ -290,25 +301,31 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
 
   Container buildProdTitle() {
     return Container(
-      alignment: Alignment.centerLeft,
-      width: MediaQuery.of(context).size.width - 30,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
+      // alignment: Alignment.centerLeft,
+      // width: MediaQuery.of(context).size.width - 30,
+      // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      height: 60,
+      padding: EdgeInsets.only(left: 20, right: 5, top: 0, bottom: 0),
+      width: MediaQuery.of(context).size.width - 60,
+
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           keyboardType: TextInputType.text,
           inputFormatters: [],
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Бүтээгдэхүүн нэр',
               hintStyle: const TextStyle(color: globals.hintGrayColor),
               errorText: (_strProdTitle.isNotEmpty ? _strProdTitle : null)),
           controller: _ctrProdTitle,
         ),
       ]),
+
     );
   }
 
@@ -317,14 +334,16 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
+
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Бүтээгдэхүүний мэдээлэл',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strProdSummary.isNotEmpty ? _strProdSummary : null)),
@@ -339,15 +358,16 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Үнэ',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strProdPrice.isNotEmpty ? _strProdPrice : null)),
@@ -365,15 +385,16 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Хямдрах үнэ',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strDiscount.isNotEmpty ? _strDiscount : null)),
@@ -388,15 +409,16 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Агуулах дах тоо',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strQuantity.isNotEmpty ? _strQuantity : null)),
@@ -411,15 +433,16 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Хамтдаа авах тоо',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strGroupQty.isNotEmpty ? _strGroupQty : null)),
@@ -434,14 +457,15 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Бүтээгдэхүүний үзүүлэлт',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strContent.isNotEmpty ? _strContent : null)),
@@ -456,14 +480,15 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width - 30,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: globals.lightGrayColor,
-          borderRadius: BorderRadius.circular(6)),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         TextFormField(
           decoration: InputDecoration(
-              border: null,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+              ),
+              fillColor: globals.lightGrayColor,
+              filled: true,
               labelText: 'Сериал, марк',
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strSerialNo.isNotEmpty ? _strSerialNo : null)),
@@ -490,6 +515,27 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
               hintStyle: TextStyle(color: globals.hintGrayColor),
               errorText: (_strImageUrl.isNotEmpty ? _strImageUrl : null)),
           controller: _ctrImageUrl,
+        ),
+      ]),
+    );
+  }
+  Container buildImageUrl1() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      width: MediaQuery.of(context).size.width - 30,
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      decoration: BoxDecoration(
+          color: globals.lightGrayColor,
+          borderRadius: BorderRadius.circular(6)),
+      child:
+      Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+        TextFormField(
+          decoration: InputDecoration(
+              border: null,
+              labelText: 'Зургийн зам 1',
+              hintStyle: TextStyle(color: globals.hintGrayColor),
+              errorText: (_strImageUrl1.isNotEmpty ? _strImageUrl1 : null)),
+          controller: _ctrImageUrl1,
         ),
       ]),
     );
@@ -570,6 +616,81 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     );
   }
 
+  Widget buildImageUrlPicker1(
+      bool isFileSelected, String fileName, Function onFilePicket) {
+    Future<XFile?> _imageFile;
+    ImagePicker _picker = ImagePicker();
+    return Center(
+      child: Container(
+        width: 155,
+        height: 155,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              fileName.isNotEmpty
+                  ? isFileSelected
+                  ? Image.file(
+                File(fileName),
+                height: 120,
+                width: 120,
+              )
+                  : SizedBox(
+                child: Image.asset(
+                  "assets/images/noimageavailable.jpg",
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.scaleDown,
+                ),
+              )
+                  : SizedBox(
+                child: Image.asset(
+                  "assets/images/instagram.png",
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(
+                        Icons.image,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        _imageFile =
+                            _picker.pickImage(source: ImageSource.gallery);
+                        _imageFile.then((file1) async {
+                          onFilePicket(file1);
+                        });
+                      },
+                    )),
+                SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(
+                        Icons.camera,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        _imageFile =
+                            _picker.pickImage(source: ImageSource.camera);
+                        _imageFile.then((file1) async {
+                          onFilePicket(file1);
+                        });
+                      },
+                    ))
+              ]),
+            ]),
+      ),
+    );
+  }
+
   Widget buildCategoryDropDown() {
     return Container(
       height: 60,
@@ -615,18 +736,21 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   Widget groupDetailButton() {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.5,
+        //width: MediaQuery.of(context).size.width * 0.5,
         padding: EdgeInsets.symmetric(vertical: 15),
+        width: 120,
+        height: 56,
+
         child: ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(globals.yellowColor),
-              padding: MaterialStateProperty.all(
-                  EdgeInsets.only(left: 1, top: 0, right: 1, bottom: 0)),
+                shadowColor: MaterialStateProperty.all(globals.grayColor),
+              padding: MaterialStateProperty.all(EdgeInsets.all(5)),
             ),
             child: Text(
-              'ЗАХИАЛГЫН МЭДЭЭЛЭЛ',
+              'Дэлгэрэнгүй',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: FontWeight.w700,
                 color: globals.whiteColor,
               ),
@@ -646,16 +770,18 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     return Center(
         child: Container(
       padding: EdgeInsets.symmetric(vertical: 15),
-      width: MediaQuery.of(context).size.width * 0.4,
+          width: 120,
+          height: 56,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(globals.yellowColor),
           padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+          shadowColor: MaterialStateProperty.all(globals.grayColor)
         ),
         child: Text(
           'ХАДГАЛАХ',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.w700,
             color: globals.whiteColor,
           ),

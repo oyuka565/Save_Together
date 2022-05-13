@@ -19,7 +19,7 @@ class Body extends StatelessWidget {
           child: Column(
             children: [
               HamtdaaBar(),
-              SizedBox(height: 20),
+              // SizedBox(height: 5),
               SearchField(),
               DiscountBanner(),
               SpecialOffers(),

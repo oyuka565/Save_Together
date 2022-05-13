@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/home/components/special_offers.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../../size_config.dart';
+
 
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({
@@ -10,6 +11,10 @@ class DiscountBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imageList = ["assets/images/reclam1.png",
+      "assets/images/reclam2.png",
+      "assets/images/amara.png"];
+
     return Container(
       // height: 90,
       width: double.infinity,
@@ -21,58 +26,40 @@ class DiscountBanner extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
-      child:
-      BannerOffersCard(
-        image: "assets/images/amara.png",
-        press: () {},
-      )
-    );
-  }
-}
-class BannerOffersCard extends StatelessWidget {
-  const BannerOffersCard({
-    Key? key,
-    required this.image,
-    required this.press,
-  }) : super(key: key);
-
-  final String  image;
-  final GestureTapCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 20),
-      child: GestureDetector(
-        onTap: press,
-        child: SizedBox(
-          width: double.infinity,
-          height: 80,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
-              children: [
-                Image.asset(
-                  image,
+      child: CarouselSlider.builder(
+        itemCount: imageList.length,
+        options: CarouselOptions(
+          enlargeCenterPage: true,
+          height: 100,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          reverse: false,
+          aspectRatio: 5.0,
+        ),
+        itemBuilder: (context, i, id){
+          //for onTap to redirect to another screen
+          return GestureDetector(
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.white,)
+              ),
+              //ClipRRect for image border radius
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  imageList[i],
+                  width: 500,
                   fit: BoxFit.cover,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF343434).withOpacity(0.4),
-                        Color(0xFF343434).withOpacity(0.15),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+
+          );
+        },
       ),
     );
   }
 }
+
+

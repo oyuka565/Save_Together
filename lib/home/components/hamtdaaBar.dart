@@ -19,13 +19,20 @@ class HamtdaaBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
   return Container(
-    color: yellowColor,
-    padding:EdgeInsets.all(16.0),
+    color: whiteColor,
+    // padding:EdgeInsets.all(19.0),
     child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Expanded(
-        child: Text('Hamtdaa',  textAlign: TextAlign.center, style: TextStyle(fontFamily: 'WaterBrush-Regular', fontSize: 34)),
+
+      Container(),
+     Image.asset(
+        "assets/images/logoo.png",
+        width: 150,
+        height: 70,
+        fit: BoxFit.contain,
+         alignment: FractionalOffset.center
+        // fit: BoxFit.scaleDown,
       ),
         IconBtnWithCounter(
           svgSrc: "assets/icons/Cart Icon.svg",

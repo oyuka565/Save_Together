@@ -39,7 +39,9 @@ class ProductModel {
   bool isFavourite = true;
   double rating = 4.5;
   int? categoryID;
-
+  String? imageUrl1;
+  String? imageUrl2;
+  String? imageUrl3;
   ProductModel(
       {this.productID,
         this.categoryID,
@@ -60,7 +62,10 @@ class ProductModel {
         this.endsAt,
         this.content,
         this.serialNo,
-        this.imageUrl});
+        this.imageUrl,
+        this.imageUrl1,
+        this.imageUrl2,
+        this.imageUrl3});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     productID =  Func.toInt(json['ProductID']);
@@ -83,6 +88,9 @@ class ProductModel {
     content = json['content'];
     serialNo = json['serial_no'];
     imageUrl = json['image_url'];
+    imageUrl1 = json['image_url1'];
+    imageUrl2 = json['image_url2'];
+    imageUrl3 = json['image_url3'];
   }
 
   Map<String, dynamic> toJson() {
@@ -107,6 +115,9 @@ class ProductModel {
     data['content'] = this.content;
     data['serial_no'] = this.serialNo;
     data['image_url'] = this.imageUrl;
+    data['image_url1'] = this.imageUrl1;
+    data['image_url2'] = this.imageUrl2;
+    data['image_url3'] = this.imageUrl3;
     return data;
   }
 }

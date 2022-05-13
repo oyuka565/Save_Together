@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:together_app/components/custom_surfix_icon.dart';
 import 'package:together_app/components/default_button.dart';
 import 'package:together_app/components/form_error.dart';
-import 'package:together_app/complete_profile/complete_profile_screen.dart';
 
 import 'package:together_app/utils/globals.dart';
 import '../../../size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../helper/keyboard.dart';
+import '../../signup_success/signup_success_screen.dart';
 
 
 class SignUpForm extends StatefulWidget {
@@ -65,9 +65,9 @@ class _SignUpFormState extends State<SignUpForm> {
                       print("Success!===============");
                       // if all are valid then go to success screen
                       KeyboardUtil.hideKeyboard(context);
-                      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                      Navigator.pushNamed(context, SignupSuccessScreen.routeName);
                     } else {
-                      print("User is not found!");
+                      print("Хэрэглэгч олдсонгүй!");
                     }
                   } catch (e){
                     print(e);

@@ -7,7 +7,6 @@ import 'package:together_app/utils/globals.dart';
 
 import '../cart/cart_screen.dart';
 import '../enums.dart';
-
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
     Key? key,
@@ -72,6 +71,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) =>  ProfileScreen()),
                     )
               ),
+
             ],
           )),
     );

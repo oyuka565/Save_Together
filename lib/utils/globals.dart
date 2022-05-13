@@ -23,6 +23,7 @@ const Color whiteColor = Colors.white;
 const Color lightPinkColor = Color(0xffFFEBEE);
 const Color grayColorSubHead = Color(0xffE3E3E3);
 const Color yellowColor = Color(0xFFFFC74A);
+const Color pastelYColor = Color(0xFFffffe0);
 const Color hintGrayColor = Color(0xff9B9B9B);
 //Url
 const String apiURL = "10.0.2.2:3000";

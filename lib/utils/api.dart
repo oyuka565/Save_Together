@@ -212,6 +212,7 @@ class APIService {
   Future<bool> saveProdInfo(ProductModel prod, bool isEdit) async {
     bool result = false;
     String urlProd = "/saveProd";
+
     if (isEdit) urlProd = urlProd + "/" + prod.productID.toString();
 
     try {
@@ -235,8 +236,9 @@ class APIService {
       final headers = {"Content-type": "application/json;charset=UTF-8"};
       var response;
 
-      if (prod.imageUrl !=null){
-        http.MultipartFile multipartFile = await http.MultipartFile.fromPath('imageUrl', prod.imageUrl!,);
+      if (prod.imageUrl !=null) {
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+          'imageUrl', prod.imageUrl!,);
         request.files.add(multipartFile);
       }
       if (isEdit)
@@ -257,7 +259,8 @@ class APIService {
             'status': "1",
             'content': prod.content!,
             'serial_no': prod.serialNo!,
-            'image_url': prod.imageUrl!
+            'image_url': prod.imageUrl!,
+            'image_url1': prod.imageUrl1!
           }),
         );
       else
@@ -277,7 +280,8 @@ class APIService {
             'status': "1",
             'content': prod.content!,
             'serial_no': prod.serialNo!,
-            'image_url': prod.imageUrl!
+            'image_url': prod.imageUrl!,
+            'image_url1': prod.imageUrl1!
           }),
         );
       if (response.statusCode == 200) {

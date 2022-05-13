@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/components/default_button.dart';
-import 'package:together_app/home/home_screen.dart';
 import 'package:together_app/size_config.dart';
+import '../../sign_in/sign_in_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
-          "Амжилттай нэвтэрлээ",
+          "Бүртгэл амжилттай",
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
@@ -26,9 +26,9 @@ class Body extends StatelessWidget {
         SizedBox(
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
-            text: "Эхлэх",
+            text: "Үргэлжлүүлэх",
             press: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushNamed(context, SignInScreen.routeName);
             },
           ),
         ),

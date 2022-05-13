@@ -109,7 +109,7 @@ const createProd = (request, response) => {
     const { User_ID,	prodcut_title, metaTitle,
       summary,	product_price, discount,
       quantity,	group_qty, status,
-      content,	serial_no, image_url, CategoryID } = request.body
+      content,	serial_no, image_url, image_url1, image_url2, image_url3, CategoryID } = request.body
     
       console.log(request.body) 
       var prodID
@@ -118,15 +118,15 @@ const createProd = (request, response) => {
       '  INSERT INTO public."Product" ("User_ID",	"prodcut_title", "metaTitle", '+
       '   "summary",	"product_price", "discount", '+
       '   "quantity",	"group_qty", "status", '+
-      '   "content",	"serial_no", "image_url", '+
+      '   "content",	"serial_no", "image_url", "image_url1", "image_url2", "image_url3"'+
       '   "current_order_qty","createdAt") '+
       '  VALUES ($1, $2, $3, ' +
       '           $4, $5, $6, ' +
       '           $7, $8, $9, ' +
-      '           $10, $11, $12, 0, current_date)  RETURNING "ProductID"', [User_ID,	prodcut_title, metaTitle,
+      '           $10, $11, $12, $13, $14, $15, 0, current_date)  RETURNING "ProductID"', [User_ID,	prodcut_title, metaTitle,
         summary,	product_price, discount,
         quantity,	group_qty, status,
-        content,	serial_no, image_url])
+        content,	serial_no, image_url, image_url1, image_url2, image_url3])
       .then(data => {
           console.log('DATA:', data); // print data;
           if (data === undefined)
@@ -158,7 +158,7 @@ const updateProd = (request, response) => {
     const {ProductId, User_ID,	prodcut_title, metaTitle,
       summary,	product_price, discount,
       quantity,	group_qty, status,
-      content,	serial_no, image_url } = request.body
+      content,	serial_no, image_url, image_url1, image_url2, image_url3 } = request.body
     
     console.log(request.body) 
     console.log(ProductId) 
@@ -167,13 +167,13 @@ const updateProd = (request, response) => {
     '  "User_ID" = $1,	"prodcut_title" = $2, "metaTitle" =$3,' +
     '	"summary" = $4,	"product_price" = $5, "discount" = $6,' +
     '	"quantity" = $7,	"group_qty" = $8, "status" = $9,	' +
-    '  "content" = $10,	"serial_no" = $11, "image_url" = $12, "updatedAt" = current_date  WHERE "ProductID" = $13' 
+    '  "content" = $10,	"serial_no" = $11, "image_url" = $12, "image_url1" = $13, "image_url2" = $14,"image_url3" = $15, "updatedAt" = current_date  WHERE "ProductID" = $16' 
 
     pool.query(sql
       , [User_ID,	prodcut_title, metaTitle,
       summary,	product_price, discount,
       quantity,	group_qty, status,
-      content,	serial_no, image_url, ProductId], (error, results) => {
+      content,	serial_no, image_url, image_url1, image_url2, image_url3, ProductId], (error, results) => {
       if (error) {
         throw error
       }

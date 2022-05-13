@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/screens/OrderScreen.dart';
+import 'package:together_app/utils/globals.dart';
 
+import '../../home/components/hamtdaaBar.dart';
 import '../../screens/ProdDetailScreen.dart';
 import '../../screens/ProdListScreen.dart';
 import '../../splash/splash_screen.dart';
@@ -10,12 +12,21 @@ import 'profile_pic.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
+      //color: pastelYColor,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/sharka.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+      child:SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
+          SizedBox(height: 80),
           ProfilePic(),
-          SizedBox(height: 20),
+          SizedBox(height: 80),
           ProfileMenu(
             text: "Хаяг байршил",
             icon: "assets/icons/Location point.svg",
@@ -64,6 +75,7 @@ class Body extends StatelessWidget {
           ),
         ],
       ),
+    )
     );
   }
 }

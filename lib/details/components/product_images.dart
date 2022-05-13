@@ -36,13 +36,13 @@ class _ProductImagesState extends State<ProductImages> {
           ),
         ),
         // SizedBox(height: 20),
-      /*  Row(
+       Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...List.generate(1,//widget.product.images.length,
+            ...List.generate(3,
                 (index) => buildSmallProductPreview(index)),
           ],
-        )*/
+        )
 
       ],
     );
