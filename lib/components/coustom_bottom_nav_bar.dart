@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:together_app/profile/profile_screen.dart';
 import 'package:together_app/home/home_screen.dart';
-import 'package:together_app/screens/ProdListScreen.dart';
 import 'package:together_app/utils/globals.dart';
 
 import '../cart/cart_screen.dart';
@@ -34,6 +34,7 @@ class CustomBottomNavBar extends StatelessWidget {
           topRight: Radius.circular(40),
         ),
       ),
+
       child: SafeArea(
           top: false,
           child: Row(
@@ -53,6 +54,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 icon: SvgPicture.asset("assets/icons/heart.svg"),
                 onPressed: () {},
               ),
+              SizedBox(width: 10),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/shopping-cart.svg"),
                 onPressed: () =>
