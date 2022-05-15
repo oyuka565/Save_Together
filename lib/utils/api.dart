@@ -128,7 +128,32 @@ class APIService {
     return result;
   }
 
+  /* Захиалга цуцлах буюу DELETE */
+  Future<bool> deleteCard(String id) async {
+    bool result = false;
+    String urlCart = "/cart/"+ id;
 
+    try {
+      var url = Uri.http(globals.apiURL, urlCart);
+      //var request = http.MultipartRequest("DELETE", url);
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.delete(
+        new Uri.http(globals.apiURL, urlCart),
+        headers: headers,
+        body: jsonEncode(<String, String>{
+          'ID': id
+        }),
+      );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
   Future<CategoryListResponse> categoryList() async {
     String url = "/category";
     CategoryListResponse res = new CategoryListResponse(list: []);
