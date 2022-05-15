@@ -157,7 +157,7 @@ const createProd = (request, response) => {
       '  INSERT INTO public."Product" ("User_ID",	"prodcut_title", "metaTitle", '+
       '   "summary",	"product_price", "discount", '+
       '   "quantity",	"group_qty", "status", '+
-      '   "content",	"serial_no", "image_url", "image_url1", "image_url2", "image_url3"'+
+      '   "content",	"serial_no", "image_url", "image_url1", "image_url2", "image_url3",'+
       '   "current_order_qty","createdAt") '+
       '  VALUES ($1, $2, $3, ' +
       '           $4, $5, $6, ' +
