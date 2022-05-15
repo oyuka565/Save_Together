@@ -45,9 +45,14 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   final TextEditingController _ctrSerialNo = TextEditingController();
   final TextEditingController _ctrImageUrl = TextEditingController();
   final TextEditingController _ctrImageUrl1 = TextEditingController();
+  final TextEditingController _ctrImageUrl2 = TextEditingController();
+  final TextEditingController _ctrImageUrl3 = TextEditingController();
 
   String _selectedCategory = "";
   bool isImageSelected = false;
+  bool isImageSelected1 = false;
+  bool isImageSelected2 = false;
+  bool isImageSelected3 = false;
 
   final String _strProdTitle = "";
   final String _strProdSummary = "";
@@ -61,6 +66,8 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
   final String _strSerialNo = "";
   String _strImageUrl = "";
   String _strImageUrl1 = "";
+  String _strImageUrl2 = "";
+  String _strImageUrl3 = "";
 
   String _errorMessage = "";
   bool validationPassed = true;
@@ -182,11 +189,29 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                         SizedBox(
                           height: 5,
                         ),
-                        buildImageUrlPicker1(isImageSelected, _strImageUrl1,
+                        buildImageUrlPicker(isImageSelected1, _strImageUrl1,
                                 (file) {
                               _strImageUrl1 = file.path;
                               _ctrImageUrl1.text = file.path;
-                              isImageSelected = true;
+                              isImageSelected1 = true;
+                            }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        buildImageUrlPicker(isImageSelected2, _strImageUrl2,
+                                (file) {
+                              _strImageUrl2 = file.path;
+                              _ctrImageUrl2.text = file.path;
+                              isImageSelected2 = true;
+                            }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        buildImageUrlPicker(isImageSelected3, _strImageUrl3,
+                                (file) {
+                              _strImageUrl3 = file.path;
+                              _ctrImageUrl3.text = file.path;
+                              isImageSelected3 = true;
                             }),
                         SizedBox(
                           height: 20,
@@ -603,81 +628,6 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
     );
   }
 
-  Widget buildImageUrlPicker1(
-      bool isFileSelected, String fileName, Function onFilePicket) {
-    Future<XFile?> _imageFile;
-    ImagePicker _picker = ImagePicker();
-    return Center(
-      child: Container(
-        width: 155,
-        height: 155,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              fileName.isNotEmpty
-                  ? isFileSelected
-                  ? Image.file(
-                File(fileName),
-                height: 120,
-                width: 120,
-              )
-                  : SizedBox(
-                child: Image.asset(
-                  "assets/images/noimageavailable.jpg",
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.scaleDown,
-                ),
-              )
-                  : SizedBox(
-                child: Image.asset(
-                  "assets/images/instagram.png",
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SizedBox(
-                    height: 35,
-                    width: 35,
-                    child: IconButton(
-                      padding: const EdgeInsets.all(0),
-                      icon: const Icon(
-                        Icons.image,
-                        size: 35,
-                      ),
-                      onPressed: () {
-                        _imageFile =
-                            _picker.pickImage(source: ImageSource.gallery);
-                        _imageFile.then((file1) async {
-                          onFilePicket(file1);
-                        });
-                      },
-                    )),
-                SizedBox(
-                    height: 35,
-                    width: 35,
-                    child: IconButton(
-                      padding: const EdgeInsets.all(0),
-                      icon: const Icon(
-                        Icons.camera,
-                        size: 35,
-                      ),
-                      onPressed: () {
-                        _imageFile =
-                            _picker.pickImage(source: ImageSource.camera);
-                        _imageFile.then((file1) async {
-                          onFilePicket(file1);
-                        });
-                      },
-                    ))
-              ]),
-            ]),
-      ),
-    );
-  }
-
   Widget buildCategoryDropDown() {
     return Container(
       height: 60,
@@ -802,7 +752,9 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
             prod.content = _ctrContent.text;
             prod.serialNo = _ctrSerialNo.text;
             prod.imageUrl = _ctrImageUrl.text;
-
+            prod.imageUrl1 = _ctrImageUrl1.text;
+            prod.imageUrl2 = _ctrImageUrl2.text;
+            prod.imageUrl3 = _ctrImageUrl3.text;
             try {
               setState(() {
                 globals.showProgress = true;
@@ -987,8 +939,17 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
 
       _selectedCategory = Func.toStr(prodInfo.list[0].categoryID!);
       isImageSelected = true;
+      isImageSelected1 = true;
+      isImageSelected2 = true;
+      isImageSelected3 = true;
       _strImageUrl = prodInfo.list[0].imageUrl!;
       _ctrImageUrl.text = prodInfo.list[0].imageUrl!;
+      _strImageUrl1 = prodInfo.list[0].imageUrl1!;
+      _ctrImageUrl1.text = prodInfo.list[0].imageUrl1!;
+      _strImageUrl2 = prodInfo.list[0].imageUrl2!;
+      _ctrImageUrl2.text = prodInfo.list[0].imageUrl2!;
+      _strImageUrl3 = prodInfo.list[0].imageUrl3!;
+      _ctrImageUrl3.text = prodInfo.list[0].imageUrl3!;
     }
   }
 }

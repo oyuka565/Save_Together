@@ -286,6 +286,21 @@ class APIService {
           'imageUrl', prod.imageUrl!,);
         request.files.add(multipartFile);
       }
+      if (prod.imageUrl1 !=null) {
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+          'imageUrl1', prod.imageUrl1!,);
+        request.files.add(multipartFile);
+      }
+      if (prod.imageUrl2 !=null) {
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+          'imageUrl2', prod.imageUrl2!,);
+        request.files.add(multipartFile);
+      }
+      if (prod.imageUrl3 !=null) {
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+          'imageUrl3', prod.imageUrl3!,);
+        request.files.add(multipartFile);
+      }
       if (isEdit)
         response = await http.put(
           new Uri.http(globals.apiURL, urlProd),
@@ -305,7 +320,9 @@ class APIService {
             'content': prod.content!,
             'serial_no': prod.serialNo!,
             'image_url': prod.imageUrl!,
-            'image_url1': prod.imageUrl1!
+            'image_url1': prod.imageUrl1!,
+            'image_url2': prod.imageUrl2!,
+            'image_url3': prod.imageUrl3!
           }),
         );
       else
@@ -326,7 +343,9 @@ class APIService {
             'content': prod.content!,
             'serial_no': prod.serialNo!,
             'image_url': prod.imageUrl!,
-            'image_url1': prod.imageUrl1!
+            'image_url1': prod.imageUrl1!,
+            'image_url2': prod.imageUrl2!,
+            'image_url3': prod.imageUrl3!
           }),
         );
       if (response.statusCode == 200) {
