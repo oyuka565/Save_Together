@@ -33,10 +33,19 @@ const getCart = (request, response) => {
   })
 }
 
-
 const getCarts = (request, response) => {
   console.log(request.body) 
   pool.query('SELECT * FROM public."Cart_item" ORDER BY "ID" ASC', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getFavorite = (request, response) => {
+  console.log(request.body) 
+  pool.query('SELECT * FROM public."favorite" ORDER BY "ID" ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -63,6 +72,36 @@ const createCart = (request, response) => {
       throw error
     }
     response.status(200).json(results.rows)
+  })
+}
+
+const createFavorite = (request, response) => {
+  console.log(request.body) 
+  const {ProductID} = request.body
+
+  pool.query('INSERT INTO "favorite" '+
+  ' ( "ProductID", "price" '+
+  '    "content", "image_url", '+
+  ') '+
+  ' SELECT "ProductID", "product_price" as price, '+
+  ' "content", "image_url" ' +
+  ' FROM "Product" where "ProductID" = $1', [ProductID], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const deleteFavorite = (request, response) => {
+  console.log(request) 
+  const id = parseInt(request.params.id)
+
+  pool.query('DELETE FROM "favorite" WHERE "ID" = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`Favorite deleted with ID: ${id}`)
   })
 }
 
@@ -308,6 +347,9 @@ const getUsers = (request, response) => {
   module.exports = {
     getCart,
     getCarts,
+    getFavorite,
+    createFavorite,
+    deleteFavorite,
     createCart,
     deleteCart,
     getGroupUsers,
