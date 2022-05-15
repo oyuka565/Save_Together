@@ -27,6 +27,13 @@ ALTER TABLE IF EXISTS public."Product"
     ADD COLUMN "image_url" text;
 	
 ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "image_url1" text;
+ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "image_url2" text;
+ALTER TABLE IF EXISTS public."Product"
+    ADD COLUMN "image_url3" text;
+	
+ALTER TABLE IF EXISTS public."Product"
     ADD COLUMN "rating" float;
 	
 ALTER TABLE IF EXISTS public."Product"
@@ -117,6 +124,7 @@ CREATE TABLE "Cart" (
   "content" text
 );
 
+drop table "Cart_item";
 CREATE TABLE "Cart_item" (
   "ID" BIGSERIAL PRIMARY KEY,
   "ProductID" int,
@@ -128,7 +136,8 @@ CREATE TABLE "Cart_item" (
   "active" int,
   "createdAt" timestamp,
   "updatedAt" timestamp,
-  "content" text
+  "content" text,
+  "image_url" text
 );
 
 

@@ -18,6 +18,7 @@ class ProductImages extends StatefulWidget {
 
 class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
+  String selectedImageUrl = "";
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +31,12 @@ class _ProductImagesState extends State<ProductImages> {
               tag: widget.product.productID.toString(),
               child: //Image.asset(widget.product.imageUrl!),
               Image.file(
-                File(widget.product.imageUrl!),
+                File(
+                    (   selectedImage == 0? widget.product.imageUrl!:
+                        selectedImage == 1? widget.product.imageUrl1!:
+                        selectedImage == 2 ?widget.product.imageUrl2!:
+                        widget.product.imageUrl3!)
+                    ),
               )
             ),
           ),
@@ -39,7 +45,7 @@ class _ProductImagesState extends State<ProductImages> {
        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...List.generate(3,
+            ...List.generate(4,
                 (index) => buildSmallProductPreview(index)),
           ],
         )
@@ -67,7 +73,14 @@ class _ProductImagesState extends State<ProductImages> {
           border: Border.all(
               color: yellowColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(widget.product.imageUrl!),
+        child: Image.file(
+          File((
+              index == 0? widget.product.imageUrl!:
+              index == 1? widget.product.imageUrl1!:
+              index == 2 ?widget.product.imageUrl2!:
+                          widget.product.imageUrl3!)
+          ),),
+        //Image.asset(widget.product.imageUrl!),
       ),
     );
   }
