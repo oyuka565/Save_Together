@@ -34,6 +34,7 @@ const defaultDuration = Duration(milliseconds: 250);
 String png_server_error = "assets/images/server_error.png";
 String png_back_btn = "assets/images/back_btn.png";
 
+
 final RegExp emailValidatorRegExp =
 RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "Майл хаягаа оруулна уу";
@@ -71,6 +72,19 @@ final headingStyle = TextStyle(
   color: Colors.black,
   height: 1.5,
 );
+
+final paymentLabels = [
+  'Дансаар шилжүүлэх',
+  'Зээлээр авах',
+  // 'Хаан банк',
+  // 'Most money',
+];
+final paymentIcons = [
+  Icons.credit_card,
+  Icons.money_off,
+  // Icons.payment,
+  // Icons.account_balance_wallet,
+];
 
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(

@@ -7,6 +7,8 @@ import 'package:together_app/utils/globals.dart';
 
 import '../cart/cart_screen.dart';
 import '../enums.dart';
+import '../payment.dart';
+
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
     Key? key,
@@ -34,7 +36,6 @@ class CustomBottomNavBar extends StatelessWidget {
           topRight: Radius.circular(40),
         ),
       ),
-
       child: SafeArea(
           top: false,
           child: Row(
@@ -56,24 +57,31 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
               SizedBox(width: 10),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/shopping-cart.svg"),
-                onPressed: () =>
-                    Navigator.pushNamed(context, CartScreen.routeName),
-              ),
-              IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/user.svg",
-                  color: MenuState.profile == selectedMenu
+                  icon: SvgPicture.asset("assets/icons/tulbur.svg",
+                    color: MenuState.payment == selectedMenu
                       ? yellowColor
-                      : inActiveIconColor,
-                ),
-                onPressed: () =>
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>  ProfileScreen()),
-                    )
-              ),
-
+                      : inActiveIconColor,),
+                  onPressed: () =>
+                      {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (context) => new Payment(),
+                          ),
+                        )
+                      }),
+              IconButton(
+                  icon: SvgPicture.asset(
+                    "assets/icons/user.svg",
+                    color: MenuState.profile == selectedMenu
+                        ? yellowColor
+                        : inActiveIconColor,
+                  ),
+                  onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()),
+                      )),
             ],
           )),
     );

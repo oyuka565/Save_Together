@@ -222,25 +222,12 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
             padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
             child: Row(
               children: [
-                /* new Image.asset(
-                  globals.png_back_btn,
-                  width: 8,
-                  height: 7,
-                ),*/
                 SizedBox(
                   width: 5,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Буцах',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: globals.blueColor,
-                    ),
-                  ),
+                  child: Icon(Icons.arrow_back),
                 ),
               ],
             )),

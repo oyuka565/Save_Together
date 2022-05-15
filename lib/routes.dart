@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:together_app/payment.dart';
 
 
 // import 'screens/sign_up/sign_up_screen.dart';
@@ -28,5 +29,6 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  Payment.routeName: (context) => Payment(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };
