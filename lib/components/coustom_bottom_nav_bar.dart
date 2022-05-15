@@ -7,6 +7,7 @@ import 'package:together_app/utils/globals.dart';
 
 import '../cart/cart_screen.dart';
 import '../enums.dart';
+import '../favorite/fav_screen.dart';
 import '../payment.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -52,8 +53,18 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/heart.svg"),
-                onPressed: () {},
+                icon: SvgPicture.asset("assets/icons/heart.svg",
+                  color: MenuState.favourite == selectedMenu
+                ? yellowColor
+                    : inActiveIconColor,),
+                onPressed: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => new FavScreen(),
+                      ),
+                    );
+                },
               ),
               SizedBox(width: 10),
               IconButton(

@@ -18,7 +18,10 @@ app.get('/', (request, response) => {
 
 app.get('/cart/:id', db.getCart)
 app.get('/cart', db.getCarts)
+app.get('/favorite', db.getFavorite)
 app.post('/addCart', db.createCart)
+app.post('/addFavorite', db.createFavorite)
+app.delete('/favorite/:id', db.deleteFavorite)
 app.post('/getTotalAmt', db.getTotalAmt)
 app.delete('/cart/:id', db.deleteCart)
 app.get('/getTotalAmt', db.getTotalAmt)

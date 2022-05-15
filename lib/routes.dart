@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:together_app/favorite/fav_screen.dart';
 import 'package:together_app/payment.dart';
 
 
@@ -29,6 +30,7 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  FavScreen.routeName: (context) => FavScreen(),
   Payment.routeName: (context) => Payment(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };

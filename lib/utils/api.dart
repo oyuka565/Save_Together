@@ -8,6 +8,7 @@ import 'package:together_app/model/ProdModel.dart';
 import '../model/CartItemModel.dart';
 import '../model/CategoryModel.dart';
 import '../model/Cart.dart';
+import '../model/FavoriteModel.dart';
 import '../model/GroupUsersModel.dart';
 import '../model/OrderModel.dart';
 import '../model/ProdGroupModel.dart';
@@ -128,10 +129,50 @@ class APIService {
     return result;
   }
 
-  /* Захиалга цуцлах буюу DELETE */
-  Future<bool> deleteCard(String id) async {
-    bool result = false;
-    String urlCart = "/cart/"+ id;
+  // Future<bool> createFavorite(FavoriteModel favorite, bool isEdit) async {
+  //   bool result = false;
+  //   String urlProd = "/addFavorite";
+  //   if (isEdit) urlProd = urlProd + "/" + favorite.ID.toString();
+  //
+  //   try {
+  //     var url = Uri.http(globals.apiURL, urlProd);
+  //
+  //     var requestMethod = isEdit ? "PUT" : "POST";
+  //     var request = http.MultipartRequest(requestMethod, url);
+  //     final headers = {"Content-type": "application/json;charset=UTF-8"};
+  //     var response;
+  //
+  //     if (favorite.imageUrl !=null){
+  //       http.MultipartFile multipartFile = await http.MultipartFile.fromPath('imageUrl', favorite.imageUrl!,);
+  //       request.files.add(multipartFile);
+  //     }
+  //     if (isEdit)
+  //       response = await http.put(
+  //         new Uri.http(globals.apiURL, urlProd),
+  //         headers: headers,
+  //         body: jsonEncode(<String, String>{
+  //           'ID': Func.toStr(favorite.ID!),
+  //         }),
+  //       );
+  //     else
+  //       response = await http.post(
+  //         new Uri.http(globals.apiURL, urlProd),
+  //         headers: headers,
+  //         body: jsonEncode(<String, String>{
+  //           'ID': Func.toStr(favorite.ID!)
+  //         }),
+  //       );
+  //     if (response.statusCode == 200) {
+  //       result = true;
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //   } finally {
+  //     globals.showProgress = false;
+  //   }
+  //   return result;
+  // }
+
 
     try {
       var url = Uri.http(globals.apiURL, urlCart);
@@ -499,4 +540,50 @@ class APIService {
     return result;
   }
 
+  Future<favoriteItemListResponse> favoriteItemList(int id) async {
+    String url = "/favorite";
+    if (id != 0) url = url + "/" + id.toString();
+    favoriteItemListResponse res = new favoriteItemListResponse(list: []);
+
+    try {
+      final response = await http.get(new Uri.http(globals.apiURL, url));
+      //await http.post(Uri.parse(url), headers: headers,body: "");
+      if (response.statusCode == 200) {
+        final jsonResp = jsonDecode(response.body);
+        res = favoriteItemListResponse.fromJson(jsonResp);
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return res;
+  }
+  Future<bool> addToFavorite(OrderModel model) async {
+    bool result = false;
+    String urlOrder = "/addFavorite";
+
+    try {
+      var url = Uri.http(globals.apiURL, urlOrder);
+
+      var request = http.MultipartRequest("POST", url);
+
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.post(
+        new Uri.http(globals.apiURL, urlOrder),
+        headers: headers,
+        body: jsonEncode(<String, String>{
+          'ProductID': Func.toStr(model.productID!)
+        }),
+      );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
 }
