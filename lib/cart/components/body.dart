@@ -39,6 +39,7 @@ class _BodyState extends State<Body> {
             key: Key(cartList.list[index].iD.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
+              deleteCart(cartList.list[index].iD!);
               setState(() {
                 cartList.list.removeAt(index);
               });
@@ -64,6 +65,14 @@ class _BodyState extends State<Body> {
   }
   CartItemListResponse cartList = new CartItemListResponse(list: []);
 
+  deleteCart(String id) async {
+    {
+      APIService apiService = new APIService();
+      apiService.deleteCard(id).then((value) {
+        print("$id устгах - " + value.toString());
+      });
+    }
+  }
   readCartList() {
     APIService apiService = new APIService();
     apiService.cartItemList(0).then((value) {
