@@ -118,7 +118,7 @@ class _ProductList extends State<ProductList> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "\$${prodList.list[index].discount}",
+                                          "${prodList.list[index].discount}₮",
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
@@ -152,7 +152,7 @@ class _ProductList extends State<ProductList> {
                                     ),
                                   ),
                                   Text(
-                                    "\$${prodList.list[index].productPrice}",
+                                    "${prodList.list[index].productPrice}₮",
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,

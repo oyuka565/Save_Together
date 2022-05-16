@@ -141,15 +141,20 @@ class _OrderScreen extends State<OrderScreen> {
                     color: globals.blackColor,
                   ),
                 ),
+                SizedBox(
+                width: 230.0,
+                child:
                 Text(
                   orderList.list[index].summary!,
                   textAlign: TextAlign.left,
+                  overflow:TextOverflow.ellipsis,
+                  maxLines: 1,
                   style: TextStyle(
                     fontSize: 10,
                     color: globals.grayColor,
                   ),
                 ),
-
+                ),
                 // actionLocation, actionActualDate
                 SizedBox(
                   height: 15,

@@ -73,9 +73,7 @@ class ProductDescription extends StatelessWidget {
     ),
     ),
            Text(
-            //"\$${widget.prod.groupQty}",
-            //product.groupQty ,
-            "\$${product.groupQty}",
+            "x  ${product.groupQty}",
             maxLines: 3,
             style: TextStyle(
               fontSize: 13,

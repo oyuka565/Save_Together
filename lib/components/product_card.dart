@@ -38,7 +38,13 @@ class _ProductCard extends State<ProductCard> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 20),
-      child: SizedBox(
+      child: ClipRect(
+    child: Banner(
+    message: "Хямдрал",
+      location: BannerLocation.topEnd,
+      color: Colors.red,
+      child:
+      SizedBox(
         width: width,
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
@@ -77,7 +83,7 @@ class _ProductCard extends State<ProductCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\$${widget._prod.discount}",
+                    "${widget._prod.discount}₮",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -120,7 +126,7 @@ class _ProductCard extends State<ProductCard> {
                     ),
                   ),
                   Text(
-                    "\$${widget._prod.groupQty}",
+                    "x  ${widget._prod.groupQty}",
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -130,7 +136,7 @@ class _ProductCard extends State<ProductCard> {
                 ],
               ),
               Text(
-                "\$${widget._prod.productPrice}",
+                "${widget._prod.productPrice}₮",
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -138,6 +144,9 @@ class _ProductCard extends State<ProductCard> {
                 ),
               ),
             ],
+        ),
+      ),
+
           ),
         ),
       ),

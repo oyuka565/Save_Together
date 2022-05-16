@@ -32,7 +32,7 @@ class Body extends StatelessWidget {
         ProductImages(widget.product),
         Center(
           child: Text(
-            "\$${widget.product.discount}",
+            "${widget.product.discount}₮",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -56,8 +56,8 @@ class Body extends StatelessWidget {
                       color: Colors.white,
                       child: Padding(
                           padding: EdgeInsets.only(
-                            left: screenWidth * 0.15,
-                            right: screenWidth * 0.15,
+                            left: screenWidth * 0.12,
+                            right: screenWidth * 0.12,
                             bottom: 40,
                             top: 15,
                           ),
@@ -87,8 +87,8 @@ class Body extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 10,
-                              height: 56),
+                              width: 50,
+                              ),
                                 SizedBox(
                                   width: 120,
                                   height: 56,
