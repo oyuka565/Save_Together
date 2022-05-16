@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:together_app/screens/OrderScreen.dart';
 import 'package:together_app/utils/globals.dart';
 
+import '../../favorite/fav_screen.dart';
 import '../../home/components/hamtdaaBar.dart';
+import '../../payment.dart';
 import '../../screens/ProdDetailScreen.dart';
 import '../../screens/ProdListScreen.dart';
 import '../../splash/splash_screen.dart';
@@ -35,7 +37,11 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Төлбөр төлөх",
             icon: "assets/icons/Cash.svg",
-            press: () {},
+            press: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Payment()),
+              );
+            },
           ),
           ProfileMenu(
             text: "Захиалга",
@@ -48,7 +54,12 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Дуртай",
             icon: "assets/icons/heart.svg",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavScreen()),
+              );
+            },
           ),
           ProfileMenu(
             text: "Бараа нэмэх",

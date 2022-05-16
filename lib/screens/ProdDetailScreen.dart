@@ -222,6 +222,9 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -716,7 +719,7 @@ class _ProdDetailScreen extends State<ProdDetailScreen> {
           shadowColor: MaterialStateProperty.all(globals.grayColor)
         ),
         child: Text(
-          'ХАДГАЛАХ',
+          'Хадгалах',
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:together_app/model/Product.dart';
 import 'package:together_app/templates/popUp.dart';
 import 'package:together_app/utils/globals.dart';
-
 import '../../model/ProdModel.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -56,6 +54,37 @@ class ProductDescription extends StatelessWidget {
             product.summary!,
             maxLines: 3,
           ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 64,
+          ),
+       child: Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+        InkWell(
+          borderRadius: BorderRadius.circular(50),
+          onTap: () {},
+           child: Container(
+           padding: EdgeInsets.all(8),
+              child: Icon(Icons.person,
+               color: Colors.green)
+    ),
+    ),
+           Text(
+            //"\$${widget.prod.groupQty}",
+            //product.groupQty ,
+            "\$${product.groupQty}",
+            maxLines: 3,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Colors.green,
+            ),
+          ),
+           ]
+          )
         ),
         Padding(
           padding: EdgeInsets.symmetric(

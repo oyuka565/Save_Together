@@ -55,11 +55,7 @@ class _ProductList extends State<ProductList> {
               children: [
                 SizedBox(height: 20),
                 backButton(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: SectionTitle(title: "Санал болгох", press: () {}),
-                ),
-                SizedBox(height: 10),
+
                 Flexible(
                   //height: MediaQuery.of(context).size.height * 0.9 -150,
                   child: SingleChildScrollView(
@@ -210,25 +206,12 @@ class _ProductList extends State<ProductList> {
             padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
             child: Row(
               children: [
-                /* new Image.asset(
-                  globals.png_back_btn,
-                  width: 8,
-                  height: 7,
-                ),*/
                 SizedBox(
                   width: 5,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Буцах',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                    ),
-                  ),
+                  child: Icon(Icons.arrow_back),
                 ),
               ],
             )),

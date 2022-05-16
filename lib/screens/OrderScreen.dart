@@ -1,31 +1,19 @@
-//import 'package:TOMO/model/AdditionalService.dart';
-//import 'package:TOMO/model/NewsList.dart';
-//import 'package:TOMO/screens/NewsDetailScreen.dart';
-//import 'package:TOMO/templates/OrderAppBar.dart' as orderAppBar;
-import 'dart:io';
 
+import 'dart:io';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:together_app/model/ProdModel.dart';
 import 'package:together_app/templates/popUp.dart';
 import 'package:together_app/utils/Func.dart';
-
-//import 'package:TOMO/utils/api.dart';
 import 'package:together_app/utils/globals.dart' as globals;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-//import 'package:modal_progress_hud/modal_progress_hud.dart';
-
 import '../components/coustom_bottom_nav_bar.dart';
 import '../enums.dart';
 import '../model/OrderModel.dart';
-import '../model/UserList.dart';
-import '../templates/AppMenu.dart';
 import '../utils/api.dart';
 import 'ProdDetailScreen.dart';
 
-//import 'NavigationMenu.dart';
 
 class OrderScreen extends StatefulWidget {
   @override
@@ -66,15 +54,10 @@ class _OrderScreen extends State<OrderScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  //AppBar
-                  //orderAppBar.draw(context, mainDrawerKey),
                   backButton(),
                   Text(
                     "Таны захиалга",
                     style: TextStyle(color: Colors.black),
-                  ),
-                  SizedBox(
-                    height: 10,
                   ),
                   buildOrderList(),
                  // insertOrderButton(),
@@ -100,25 +83,12 @@ class _OrderScreen extends State<OrderScreen> {
             padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
             child: Row(
               children: [
-                /* new Image.asset(
-                  globals.png_back_btn,
-                  width: 8,
-                  height: 7,
-                ),*/
                 SizedBox(
                   width: 5,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Буцах',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: globals.blueColor,
-                    ),
-                  ),
+                  child: Icon(Icons.arrow_back),
                 ),
               ],
             )),
@@ -136,9 +106,6 @@ class _OrderScreen extends State<OrderScreen> {
           itemBuilder: (BuildContext, index) {
             return Row(
               children: [
-                SizedBox(
-                  height: 100,
-                ),
                 GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -247,7 +214,7 @@ class _OrderScreen extends State<OrderScreen> {
     return Center(
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),
-          width: MediaQuery.of(context).size.width * 0.8,
+          width: MediaQuery.of(context).size.width * 0.6,
           child: ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(globals.yellowColor),

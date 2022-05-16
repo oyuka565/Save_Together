@@ -24,13 +24,7 @@ class SectionTitle extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        GestureDetector(
-          onTap: press,
-          child: Text(
-            "Дэлгэрэнгүй",
-            style: TextStyle(color: Color(0xFFBBBBBB)),
-          ),
-        ),
+
       ],
     );
   }

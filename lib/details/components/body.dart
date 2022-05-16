@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:together_app/components/default_button.dart';
 import 'package:together_app/model/OrderModel.dart';
-import 'package:together_app/model/Product.dart';
-import 'package:together_app/size_config.dart';
 import 'package:together_app/templates/popUp.dart';
-import '../../model/Cart.dart';
 import '../../utils/api.dart';
 import '../../utils/globals.dart';
 import '../../model/ProdModel.dart';
-import 'color_dots.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';

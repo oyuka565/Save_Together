@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:together_app/home/components/product_list.dart';
 import 'package:together_app/utils/globals.dart' as globals;
-import '../../../size_config.dart';
 import '../../model/CategoryModel.dart';
 import '../../templates/popUp.dart';
-import '../../utils/Func.dart';
 import '../../utils/api.dart';
 import 'section_title.dart';
 

@@ -107,6 +107,28 @@ class _ProductCard extends State<ProductCard> {
                   ),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(50),
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: Icon(Icons.person,
+                          color: Colors.green)
+                    ),
+                  ),
+                  Text(
+                    "\$${widget._prod.groupQty}",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
               Text(
                 "\$${widget._prod.productPrice}",
                 style: TextStyle(
