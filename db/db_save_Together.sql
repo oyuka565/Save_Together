@@ -141,6 +141,15 @@ CREATE TABLE "Cart_item" (
 );
 
 
+CREATE TABLE "favorite" (
+  "ID" BIGSERIAL PRIMARY KEY,
+  "ProductID" int,
+  "User_ID" varchar,
+  "price" float,
+  "content" text,
+  "image_url" text
+);
+
 ALTER TABLE "Cart_item" ADD FOREIGN KEY ("Cart_ID") REFERENCES "Cart" ("Cart_ID");
 
 ALTER TABLE "Cart_item" ADD FOREIGN KEY ("ProductID") REFERENCES "Product" ("ProductID");

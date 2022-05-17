@@ -65,7 +65,7 @@ class _BodyState extends State<Body> {
 
   readFavoriteList() {
     APIService apiService = new APIService();
-    apiService.favoriteItemList(0).then((value) {
+    apiService.favoriteItemList().then((value) {
       if (value != null) {
         try {
           setState(() {

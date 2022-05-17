@@ -44,8 +44,9 @@ const getCarts = (request, response) => {
 }
 
 const getFavorite = (request, response) => {
+  const User_ID = (request.params.id)
   console.log(request.body) 
-  pool.query('SELECT * FROM public."favorite" ORDER BY "ID" ASC', (error, results) => {
+  pool.query('SELECT * FROM public."favorite" WHERE "User_ID" = $1 ORDER BY "ID" ASC', [User_ID], (error, results) => {
     if (error) {
       throw error
     }
@@ -75,17 +76,19 @@ const createCart = (request, response) => {
   })
 }
 
-const createFavorite = (request, response) => {
-  console.log(request.body) 
-  const {ProductID} = request.body
+const createFavorite = (request, response) => {  
+  const {ProductID, User_id} = request.body
+  console.log("createFavorite prod:" + ProductID + " user:" + User_id) 
 
-  pool.query('INSERT INTO "favorite" '+
-  ' ( "ProductID", "price" '+
-  '    "content", "image_url", '+
+  var sql = 'INSERT INTO "favorite" '+
+  ' ( "ProductID", "price", '+
+  '    "content", "image_url", "User_ID"'+
   ') '+
   ' SELECT "ProductID", "product_price" as price, '+
-  ' "content", "image_url" ' +
-  ' FROM "Product" where "ProductID" = $1', [ProductID], (error, results) => {
+  ' "content", "image_url", $2 as "User_ID" ' +
+  ' FROM "Product" where "ProductID" = $1';
+  console.log(sql)
+  pool.query(sql, [ProductID, User_id], (error, results) => {
     if (error) {
       throw error
     }
@@ -93,15 +96,14 @@ const createFavorite = (request, response) => {
   })
 }
 
-const deleteFavorite = (request, response) => {
-  console.log(request) 
-  const id = parseInt(request.params.id)
-
-  pool.query('DELETE FROM "favorite" WHERE "ID" = $1', [id], (error, results) => {
+const deleteFavorite = (request, response) => {  
+  const {ProductID, User_id} = request.body
+  console.log("deleteFavorite prod:" + ProductID + " user:" + User_id) 
+  pool.query('DELETE FROM "favorite" WHERE "ProductID" = $1 AND "User_ID" = $2',[ProductID, User_id], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`Favorite deleted with ID: ${id}`)
+    response.status(200).send()
   })
 }
 

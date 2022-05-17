@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:together_app/templates/popUp.dart';
 import 'package:together_app/utils/globals.dart';
+import '../../model/OrderModel.dart';
 import '../../model/ProdModel.dart';
+import '../../utils/api.dart';
 
-class ProductDescription extends StatelessWidget {
-  const ProductDescription(  this.product//, this.pressOnSeeMore
-  );
-
+class ProductDescription extends StatefulWidget {
+  const ProductDescription(  this.product);
   final ProductModel product;
-  //final GestureTapCallback? pressOnSeeMore;
+
+  @override
+  _ProductDescription createState() => _ProductDescription();
+}
+
+class _ProductDescription extends State<ProductDescription> {
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,7 @@ class ProductDescription extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            product.prodcutTitle!,
+            widget.product.prodcutTitle!,
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -31,18 +36,53 @@ class ProductDescription extends StatelessWidget {
             width: 64,
             decoration: BoxDecoration(
               color:
-                  product.isFavourite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+                  widget.product.isFavourite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomLeft: Radius.circular(20),
               ),
             ),
-            child: SvgPicture.asset(
-              "assets/icons/Heart Icon_2.svg",
-              color:
-                  product.isFavourite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-              height: 16,
-            ),
+            child:
+              InkWell(
+              onTap: () {
+                APIService apiService = new APIService();
+                try {
+
+                  if (!widget.product.isFavourite) {
+                    apiService
+                        .addToFavorite(widget.product)
+                        .then((value) {
+                      if (value != null) {
+                        print("added fav:" + value.toString());
+                      }
+                    });
+                  }
+                  else
+                    {
+                      apiService
+                          .deleteFavorite(widget.product)
+                          .then((value) {
+                        if (value != null) {
+                          print("deleted fav:" + value.toString());
+                        }
+                      });
+                    }
+                  setState(() {
+                    widget.product.isFavourite = !widget.product.isFavourite;
+                  });
+
+                } catch (e) {
+                  print(e.toString());
+                }
+              }, // Image tapped
+              splashColor: Colors.white10, // Splash color over image
+              child: SvgPicture.asset(
+                        "assets/icons/Heart Icon_2.svg",
+                        color:
+                        widget.product.isFavourite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                        height: 16,
+                      ),
+              ),
           ),
         ),
         Padding(
@@ -51,7 +91,7 @@ class ProductDescription extends StatelessWidget {
             right: 64,
           ),
           child: Text(
-            product.summary!,
+            widget.product.summary!,
             maxLines: 3,
           ),
         ),
@@ -73,7 +113,7 @@ class ProductDescription extends StatelessWidget {
     ),
     ),
            Text(
-            "x  ${product.groupQty}",
+            "x  ${widget.product.groupQty}",
             maxLines: 3,
             style: TextStyle(
               fontSize: 13,
@@ -90,7 +130,7 @@ class ProductDescription extends StatelessWidget {
             vertical: 10,
           ),
           child: GestureDetector(
-            onTap: () { informationPopup(context, product.prodcutTitle!, product.content!);},
+            onTap: () { informationPopup(context, widget.product.prodcutTitle!, widget.product.content!);},
             child: Row(
               children: [
                 Text(

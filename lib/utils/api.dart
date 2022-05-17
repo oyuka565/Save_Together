@@ -542,9 +542,10 @@ class APIService {
     return result;
   }
 
-  Future<favoriteItemListResponse> favoriteItemList(int id) async {
+  Future<favoriteItemListResponse> favoriteItemList() async {
+    String userID = globals.userId;
     String url = "/favorite";
-    if (id != 0) url = url + "/" + id.toString();
+    if (userID != "") url = url + "/" + userID;
     favoriteItemListResponse res = new favoriteItemListResponse(list: []);
 
     try {
@@ -561,7 +562,7 @@ class APIService {
     }
     return res;
   }
-  Future<bool> addToFavorite(OrderModel model) async {
+  Future<bool> addToFavorite(ProductModel model) async {
     bool result = false;
     String urlOrder = "/addFavorite";
 
@@ -575,7 +576,33 @@ class APIService {
         new Uri.http(globals.apiURL, urlOrder),
         headers: headers,
         body: jsonEncode(<String, String>{
-          'ProductID': Func.toStr(model.productID!)
+          'ProductID': Func.toStr(model.productID!),
+          'User_id': model.userID!
+        }),
+      );
+      if (response.statusCode == 200) {
+        result = true;
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      globals.showProgress = false;
+    }
+    return result;
+  }
+  /*  DELETE */
+  Future<bool> deleteFavorite(ProductModel model) async {
+    bool result = false;
+    String urlCart = "/favorite";
+    try {
+      var url = Uri.http(globals.apiURL, urlCart);
+      final headers = {"Content-type": "application/json;charset=UTF-8"};
+      var response = await http.delete(
+        new Uri.http(globals.apiURL, urlCart),
+        headers: headers,
+        body: jsonEncode(<String, String>{
+          'ProductID': Func.toStr(model.productID!),
+          'User_id': model.userID!
         }),
       );
       if (response.statusCode == 200) {
